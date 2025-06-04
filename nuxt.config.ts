@@ -30,7 +30,7 @@ export default defineNuxtConfig({
   },
   icon: {
     provider: 'iconify',
-    collections: ['tabler']
+    collections: ['material-symbols']
   },
   // site: {
 
