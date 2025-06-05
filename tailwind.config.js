@@ -36,8 +36,8 @@ export default {
                 roboto: ['Roboto', 'sans-serif']
             },
             // Chequear
-            backgroundImage: {
-                'gradient-primary': 'linear-gradient(102deg, #2E0049 1.06%, #6C58FE 100%)'
+            boxShadow: {
+                '40': '0px 0px 11px 0px rgba(0, 0, 0, .4);'
             }
         }
     }
