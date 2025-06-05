@@ -11,23 +11,31 @@ export default {
             colors: {
                 primary: "#D3245C",
                 secondary: "#2E0049",
-                lightViolet: "#6759F9",
+                violet: {
+                    light: "#A46AFE",
+                    mid: "#6C58FE"
+                },
                 dark: "#131313",
                 light: "#FBF9F9",
-                premier: "#E7B44B",
+                premier: "#E8B34C",
                 whatsapp: "#36E85E",
                 gray: {
-                    extraLight: "#F1F1F1",
+                    extraLight: "#F9F9F9",
                     light: "#E9E9E9",
-                    mid: "#CCCCCC",
-                    dark: "#969696",
-                    extraDark: "#636363"
+                    mid: "#D9D9D9",
+                    dark: "#636363",
+                    extraDark: "#2E2E2E"
+                },
+                tripadvisor: {
+                    green: "#34E0A1",
+                    black: "#000000"
                 }
             },
             fontFamily: {
                 raleway: ['Raleway', 'sans-serif'],
                 roboto: ['Roboto', 'sans-serif']
             },
+            // Chequear
             backgroundImage: {
                 'gradient-primary': 'linear-gradient(102deg, #2E0049 1.06%, #6C58FE 100%)'
             }
