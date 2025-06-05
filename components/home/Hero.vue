@@ -1,6 +1,6 @@
 <template>
     <section
-        class="w-full flex flex-col items-center relative bg-cover bg-no-repeat bg-[url('/images/home/Hero-Mobile.webp')] pt-28 pb-[3.5rem]"
+        class="w-full flex flex-col items-center relative bg-cover bg-no-repeat bg-[url('/images/home/Hero-Mobile.webp')] pt-28 pb-[3.5rem] mb-36"
         style="background-position: 80% 50%;">
         <NuxtImg src="/images/home/Hero-Sticker.webp" alt="" class="w-16 h-16 absolute top-3 right-3" />
 
@@ -32,7 +32,6 @@
                         :placeholder="selectedDestinations.length === 0 ? '¿Dónde quieres viajar?' : ''"
                         :readonly="isMobile && selectedDestinations.length > 0" :style="{ paddingLeft: '1rem' }"
                         class="w-full rounded-full border-0 text-gray-extraDark placeholder-gray-extraDark placeholder:text-xs placeholder:font-medium focus:outline-none text-base py-4 pr-16"
-                        :class="{ 'bg-gray-100 cursor-not-allowed': isMobile && selectedDestinations.length > 0 }"
                         @input="handleInput" @focus="handleFocus" @keyup.enter="handleSearch"
                         @keydown.escape="hideDropdown" />
 
@@ -85,6 +84,13 @@
                 </p>
             </div>
         </div>
+        <!-- Carrusel con destinos -->
+        <div class="w-full absolute bottom-0 mt-4 -mb-32">
+            <CarouselStatic :scroll-amount="280">
+                <HomeHeroCard v-for="destination in carouselDestinations" :key="destination.id"
+                    :destination="destination" class="flex-shrink-0 w-48" />
+            </CarouselStatic>
+        </div>
     </section>
 </template>
 
@@ -106,6 +112,40 @@ const destinations = ref([
     { id: 8, name: 'Madrid' },
     { id: 9, name: 'Londres' },
     { id: 10, name: 'Berlín' }
+])
+
+// Datos para el carrusel - Basándome en las imágenes que compartiste
+const carouselDestinations = ref([
+    {
+        id: 1,
+        name: 'Europa',
+        price: 'Desde USD 381',
+        image: '/images/home/hero/espana-viaje.webp'
+    },
+    {
+        id: 2,
+        name: 'España',
+        price: 'Desde USD 279',
+        image: '/images/home/hero/espana-viaje.webp'
+    },
+    {
+        id: 3,
+        name: 'Italia',
+        price: 'Desde USD 456',
+        image: '/images/home/hero/espana-viaje.webp'
+    },
+    {
+        id: 4,
+        name: 'Japón',
+        price: 'Desde USD 1.609',
+        image: '/images/home/hero/espana-viaje.webp'
+    },
+    {
+        id: 5,
+        name: 'Estados Unidos',
+        price: 'Desde USD 824',
+        image: '/images/home/hero/espana-viaje.webp'
+    }
 ])
 
 const isMobile = ref(false)
