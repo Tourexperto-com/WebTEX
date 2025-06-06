@@ -10,6 +10,10 @@ export default {
         extend: {
             colors: {
                 primary: "#D3245C",
+                primaryButton: {
+                    hover: "#DE3F72",
+                    focus: "#C02053"
+                },
                 secondary: "#2E0049",
                 violet: {
                     light: "#A46AFE",
