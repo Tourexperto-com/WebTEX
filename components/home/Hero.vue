@@ -1,11 +1,10 @@
 <template>
-    <section
-        class="w-full flex flex-col items-center relative bg-cover bg-no-repeat bg-[url('/images/home/Hero-Mobile.webp')] pt-28 pb-[3.5rem] mb-36"
-        style="background-position: 80% 50%;">
-        <NuxtImg src="/images/home/Hero-Sticker.webp" alt="" class="w-16 h-16 absolute top-3 right-3" />
+    <section class="w-full flex flex-col items-center relative mb-36" style="background-position: 80% 50%;">
+        <NuxtImg src="/images/home/Hero-Mobile.png" alt="" class="w-full min-h-[302px] object-cover relative -z-10" />
+        <NuxtImg src="/images/home/Hero-Sticker.webp" alt="" class="w-16 h-16 absolute top-4 right-4" />
 
-        <div class="w-full max-w-72 flex flex-col items-center gap-2">
-            <HeadingH1 class="text-white">
+        <div class="w-full max-w-72 flex flex-col items-center gap-2 absolute z-[2] top-1/2 transform -translate-y-1/2 my-4">
+            <HeadingH1 class="text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.15)]">
                 Planificar el viaje de tus sueños nunca fue tan fácil.
             </HeadingH1>
 
@@ -17,7 +16,7 @@
                         class="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
                         <div class="flex flex-wrap gap-1">
                             <div v-for="destination in selectedDestinations" :key="destination.id"
-                                class="flex items-center gap-0.5 bg-primary rounded-xl text-white text-xs pl-3 pr-1 py-[0.375rem]">
+                                class="flex items-center gap-0.5 bg-secondary rounded-xl text-white text-xs pl-3 pr-1 py-[0.375rem]">
                                 <span>{{ destination.name }}</span>
                                 <button @click="removeDestination(destination.id)"
                                     class="flex justify-center items-center hover:text-gray-light transition-colors"
@@ -30,38 +29,38 @@
                     <label for="searchInput" class="sr-only">¿Dónde quieres viajar?</label>
                     <input v-model="searchQuery" type="text" id="searchInput"
                         :placeholder="selectedDestinations.length === 0 ? '¿Dónde quieres viajar?' : ''"
-                        :readonly="isMobile && selectedDestinations.length > 0" :style="{ paddingLeft: '1rem' }"
-                        class="w-full rounded-full border-0 text-gray-extraDark placeholder-gray-extraDark placeholder:text-xs placeholder:font-medium focus:outline-none text-base py-4 pr-16"
+                        :readonly="isMobile && selectedDestinations.length > 0"
+                        class="w-full rounded-full border-0 text-gray-extraDark placeholder-gray-dark placeholder:text-xs placeholder:font-semibold focus:outline-none text-xs py-5 px-6"
                         @input="handleInput" @focus="handleFocus" @keyup.enter="handleSearch"
                         @keydown.escape="hideDropdown" />
 
                     <button @click="handleSearch"
-                        class="absolute right-2 top-1/2 bg-gray-extraLight hover:bg-primary border-2 border-primary text-primary hover:text-white font-bold rounded-full transform -translate-y-1/2 transition-colors duration-300 focus:outline-none px-4 py-2"
+                        class="w-12 h-12 flex justify-center items-center absolute right-2 top-1/2 bg-primary hover:bg-primaryButton-hover focus:bg-primaryButton-focus text-white font-bold rounded-full transform -translate-y-1/2 transition-colors duration-300 focus:outline-none"
                         aria-label="Buscar destino">
                         <div class="flex items-center gap-2">
                             <Icon name="material-symbols:search-rounded" size="1.5rem" />
-                            Buscar
+                            <p class="hidden xl:inline">Buscar</p>
                         </div>
                     </button>
                 </div>
 
                 <!-- Dropdown -->
                 <div v-if="showDropdown"
-                    class="w-max absolute top-full left-0 right-0 z-50 bg-white border-2 border-gray-dark rounded-md overflow-hidden mt-1">
+                    class="w-max absolute top-full left-4 right-0 bg-white border border-gray-dark rounded-xl overflow-hidden mt-1">
 
-                    <div v-if="isMobile && selectedDestinations.length > 0" class="text-gray-dark text-xs p-4">
+                    <div v-if="isMobile && selectedDestinations.length > 0" class="text-gray-dark font-semibold text-xs p-4">
                         Solo puedes elegir un destino
                     </div>
 
-                    <div v-else-if="searchQuery.length < 3" class="text-gray-dark text-xs p-4">
+                    <div v-else-if="searchQuery.length < 3" class="text-gray-dark font-semibold text-xs p-4">
                         Ingresa 3 o más caracteres
                     </div>
 
-                    <div v-else-if="isLoading" class="text-gray-dark text-xs p-4">
+                    <div v-else-if="isLoading" class="text-gray-dark font-semibold text-xs p-4">
                         Buscando...
                     </div>
 
-                    <div v-else-if="filteredDestinations.length === 0" class="text-gray-dark text-xs p-4">
+                    <div v-else-if="filteredDestinations.length === 0" class="text-gray-dark font-semibold text-xs p-4">
                         No se encontraron resultados
                     </div>
 
@@ -69,7 +68,7 @@
                         <button v-for="destination in filteredDestinations" :key="destination.id"
                             @click="selectDestination(destination)"
                             class="min-w-44 flex flex-col text-left hover:bg-violet-light/10 transition-colors duration-300 focus:outline-none px-4 py-3">
-                            <div class="text-xs">{{ destination.name }}</div>
+                            <div class="text-xs text-gray-dark font-semibold">{{ destination.name }}</div>
                         </button>
                     </div>
                 </div>
@@ -77,18 +76,18 @@
 
             <!-- Promocion -->
             <div
-                class="w-max flex items-center justify-center gap-1 bg-primary text-white px-3 py-1 rounded-full text-xs">
+                class="w-max flex items-center justify-center gap-1 bg-primary text-white rounded-full py-[0.375rem] pl-2 pr-3">
                 <Icon name="material-symbols:check-circle-outline-rounded" />
-                <p class="font-medium">
+                <p class="font-medium text-xs">
                     Reserva con el 20% y paga en cuotas.
                 </p>
             </div>
         </div>
         <!-- Carrusel con destinos -->
-        <div class="w-full absolute bottom-0 mt-4 -mb-32">
+        <div class="w-full absolute -bottom-[6.75rem]">
             <CarouselStatic :scroll-amount="280">
                 <HomeHeroCard v-for="destination in carouselDestinations" :key="destination.id"
-                    :destination="destination" class="flex-shrink-0 w-48" />
+                    :destination="destination" class="w-48 flex-shrink-0 first-of-type:ml-4 last-of-type:mr-4" />
             </CarouselStatic>
         </div>
     </section>
@@ -114,7 +113,6 @@ const destinations = ref([
     { id: 10, name: 'Berlín' }
 ])
 
-// Datos para el carrusel - Basándome en las imágenes que compartiste
 const carouselDestinations = ref([
     {
         id: 1,

@@ -22,11 +22,13 @@ export default defineNuxtConfig({
   // supabase: {
 
   // },
+  app: {
+    // Poner etiquetas Head archivo SEO
+  },
   fonts: {
-    families: [
-      { name: 'Raleway', provider: 'google' },
-      { name: 'Roboto', provider: 'google' }
-    ]
+    defaults: {
+      weights: [300, 400, 500, 600, 700, 800],
+    }
   },
   icon: {
     provider: 'iconify',
