@@ -17,7 +17,8 @@ export default {
                 secondary: "#2E0049",
                 violet: {
                     light: "#A46AFE",
-                    mid: "#6C58FE"
+                    mid: "#6C58FE",
+                    dark: "#6E00AF"
                 },
                 dark: "#131313",
                 light: "#FBF9F9",
@@ -41,7 +42,7 @@ export default {
             },
             // Chequear
             boxShadow: {
-                '40': '0px 0px 11px 0px rgba(0, 0, 0, .4);'
+                '1': '0px 1px 4px 0px rgba(12, 12, 13, 0.15)',
             }
         }
     }
