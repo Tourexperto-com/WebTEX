@@ -4,7 +4,7 @@
             <p class="text-center font-medium">Opiniones de nuestros viajeros</p>
         </div>
         <div class="flex justify-center items-center gap-2 rounded-b-[18px] py-2 px-6">
-            <p class="text-sm font-bold">4.5</p>
+            <p class="text-sm font-bold font-roboto">4.5</p>
             <div class="flex items-center gap-1">
                 <div v-for="n in 4" :key="n" class="w-4 h-4 bg-tripadvisor-green rounded-full"></div>
                 <div class="w-4 h-4 border border-tripadvisor-green rounded-full relative overflow-hidden">
