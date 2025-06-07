@@ -1,6 +1,6 @@
 <template>
     <NuxtLink :to="url" class="flex flex-col border-2 border-tripadvisor-green rounded-[20px]" target="_blank">
-        <div class="bg-tripadvisor-green rounded-t-[18px] py-2 px-6">
+        <div class="bg-tripadvisor-green rounded-t-[18px] py-2">
             <p class="text-center font-medium">Opiniones de nuestros viajeros</p>
         </div>
         <div class="flex justify-center items-center gap-2 rounded-b-[18px] py-2 px-6">
