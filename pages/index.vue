@@ -1,8 +1,10 @@
 <template>
-    <main>
+    <DefaultMain>
         <HomeHero />
         <HomeIncluido />
         <HomeMasVendidos />
         <HomeOpinionTripadvisor />
-    </main>
+        <HomeOfertas />
+        <HomeVueloIncluido />
+    </DefaultMain>
 </template>

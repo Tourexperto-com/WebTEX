@@ -1,11 +1,11 @@
 <template>
-    <section class="flex flex-col gap-3 py-6">
+    <DefaultSection>
         <HeadingH2 class="text-center text-secondary">Los más vendidos</HeadingH2>
-        <CarouselStatic :scroll-amount="280">
+        <CarouselStatic>
             <ProductCard v-for="(producto, index) in productos" :key="index" :producto="producto"
                 class="w-48 flex-shrink-0 first-of-type:ml-4 last-of-type:mr-4" />
         </CarouselStatic>
-    </section>
+    </DefaultSection>
 </template>
 
 <script setup>

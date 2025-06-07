@@ -9,7 +9,7 @@
         <div ref="container" class="scrollbar-hide overflow-x-auto cursor-grab select-none"
             :class="{ 'cursor-grabbing': isDragging }" @scroll="updateArrows" @mousedown="startDrag" @mousemove="drag"
             @mouseup="endDrag" @mouseleave="endDrag" @touchstart="startDrag" @touchmove="drag" @touchend="endDrag">
-            <div class="w-max flex gap-2 pb-3">
+            <div class="w-max flex gap-2 pb-2">
                 <slot />
             </div>
         </div>

@@ -43,6 +43,9 @@ export default {
             // Chequear
             boxShadow: {
                 '1': '0px 1px 4px 0px rgba(12, 12, 13, 0.15)',
+            },
+            backgroundImage: {
+                'gradient-violet': 'linear-gradient(to bottom, #6C58FE, #2E0049)',
             }
         }
     }

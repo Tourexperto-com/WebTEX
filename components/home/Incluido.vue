@@ -1,6 +1,43 @@
 <template>
-    <section class="flex flex-col items-center gap-3 bg-gradient-to-b from-violet-mid to-secondary py-6 px-4">
+    <DefaultSection class="bg-gradient-violet py-6 px-4">
         <HeadingH2 class="text-center text-white">Viajes todo incluido</HeadingH2>
-        <!-- Iconos -->
-    </section>
+        <div class="grid grid-cols-3 gap-x-2 gap-y-3">
+            <div v-for="(item, index) in incluido" :key="index"
+                class="flex flex-col items-center gap-1 bg-white rounded-lg shadow-1 py-2 px-4">
+                <span
+                    :class="`w-6 h-6 bg-contain bg-no-repeat bg-center`"
+                    :style="{ backgroundImage: `url('/images/home/incluido/${item.img}.svg')` }"></span>
+                <p class="text-xs text-secondary font-semibold">{{ item.title }}</p>
+            </div>
+        </div>
+    </DefaultSection>
 </template>
+
+<script setup>
+const incluido = [
+    {
+        img: "Traslados",
+        title: "Traslados"
+    },
+    {
+        img: "Alojamiento",
+        title: "Alojamiento"
+    },
+    {
+        img: "Comidas",
+        title: "Comidas"
+    },
+    {
+        img: "Excursiones",
+        title: "Excursiones"
+    },
+    {
+        img: "Guias",
+        title: "Guías"
+    },
+    {
+        img: "Seguro",
+        title: "Seguro"
+    },
+];
+</script>

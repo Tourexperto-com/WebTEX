@@ -1,5 +1,5 @@
 <template>
-    <section class="w-full flex flex-col items-center relative mb-36" style="background-position: 80% 50%;">
+    <DefaultSection class="relative mb-[5.5rem]" style="background-position: 80% 50%;">
         <NuxtImg src="/images/home/Hero-Mobile.png" alt="" class="w-full min-h-[302px] object-cover relative -z-10" />
         <NuxtImg src="/images/home/Hero-Sticker.webp" alt="" class="w-16 h-16 absolute top-4 right-4" />
 
@@ -12,13 +12,13 @@
                 <!-- Search -->
                 <div class="w-full relative">
                     <!-- Destinos seleccionados DENTRO del input -->
-                    <div v-if="selectedDestinations.length > 0"
+                    <div v-if="selectedDestinatinos.length > 0"
                         class="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
                         <div class="flex flex-wrap gap-1">
-                            <div v-for="destination in selectedDestinations" :key="destination.id"
+                            <div v-for="destino in selectedDestinatinos" :key="destino.id"
                                 class="flex items-center gap-0.5 bg-secondary rounded-xl text-white text-xs pl-3 pr-1 py-[0.375rem]">
-                                <span>{{ destination.name }}</span>
-                                <button @click="removeDestination(destination.id)"
+                                <span>{{ destino.name }}</span>
+                                <button @click="removeDestino(destino.id)"
                                     class="flex justify-center items-center hover:text-gray-light transition-colors"
                                     aria-label="Remover destino">
                                     <Icon name="material-symbols:close-small" size="1.5rem" />
@@ -28,8 +28,8 @@
                     </div>
                     <label for="searchInput" class="sr-only">¿Dónde quieres viajar?</label>
                     <input v-model="searchQuery" type="text" id="searchInput"
-                        :placeholder="selectedDestinations.length === 0 ? '¿Dónde quieres viajar?' : ''"
-                        :readonly="isMobile && selectedDestinations.length > 0"
+                        :placeholder="selectedDestinatinos.length === 0 ? '¿Dónde quieres viajar?' : ''"
+                        :readonly="isMobile && selectedDestinatinos.length > 0"
                         class="w-full rounded-full border-0 text-gray-extraDark placeholder-gray-dark placeholder:text-xs placeholder:font-semibold focus:outline-none text-xs py-5 px-6"
                         @input="handleInput" @focus="handleFocus" @keyup.enter="handleSearch"
                         @keydown.escape="hideDropdown" />
@@ -48,7 +48,7 @@
                 <div v-if="showDropdown"
                     class="w-max absolute top-full left-4 right-0 bg-white border border-gray-dark rounded-xl overflow-hidden mt-1">
 
-                    <div v-if="isMobile && selectedDestinations.length > 0" class="text-gray-dark font-semibold text-xs p-4">
+                    <div v-if="isMobile && selectedDestinatinos.length > 0" class="text-gray-dark font-semibold text-xs p-4">
                         Solo puedes elegir un destino
                     </div>
 
@@ -60,15 +60,15 @@
                         Buscando...
                     </div>
 
-                    <div v-else-if="filteredDestinations.length === 0" class="text-gray-dark font-semibold text-xs p-4">
+                    <div v-else-if="filteredDestinatinos.length === 0" class="text-gray-dark font-semibold text-xs p-4">
                         No se encontraron resultados
                     </div>
 
                     <div v-else class="overflow-y-auto max-h-52">
-                        <button v-for="destination in filteredDestinations" :key="destination.id"
-                            @click="selectDestination(destination)"
+                        <button v-for="destino in filteredDestinatinos" :key="destino.id"
+                            @click="selectDestino(destino)"
                             class="min-w-44 flex flex-col text-left hover:bg-violet-light/10 transition-colors duration-300 focus:outline-none px-4 py-3">
-                            <div class="text-xs text-gray-dark font-semibold">{{ destination.name }}</div>
+                            <div class="text-xs text-gray-dark font-semibold">{{ destino.name }}</div>
                         </button>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
 
             <!-- Promocion -->
             <div
-                class="w-max flex items-center justify-center gap-1 bg-primary text-white rounded-full py-[0.375rem] pl-2 pr-3">
+                class="w-max flex items-center justify-center gap-1 z-[-1] bg-primary text-white rounded-full py-[0.375rem] pl-2 pr-3">
                 <Icon name="material-symbols:check-circle-outline-rounded" />
                 <p class="font-medium text-xs">
                     Reserva con el 20% y paga en cuotas.
@@ -84,13 +84,13 @@
             </div>
         </div>
         <!-- Carrusel con destinos -->
-        <div class="w-full absolute -bottom-[6.75rem]">
-            <CarouselStatic :scroll-amount="280">
-                <HomeHeroCard v-for="destination in carouselDestinations" :key="destination.id"
-                    :destination="destination" class="w-48 flex-shrink-0 first-of-type:ml-4 last-of-type:mr-4" />
+        <div class="w-full absolute -bottom-24">
+            <CarouselStatic>
+                <HomeHeroCard v-for="destino in carouselDestinos" :key="destino.id"
+                    :destino="destino" class="w-48 flex-shrink-0 first-of-type:ml-4 last-of-type:mr-4" />
             </CarouselStatic>
         </div>
-    </section>
+    </DefaultSection>
 </template>
 
 <script setup>
@@ -98,9 +98,9 @@ const searchQuery = ref('')
 const showDropdown = ref(false)
 const isLoading = ref(false)
 const searchContainer = ref(null)
-const selectedDestinations = ref([])
+const selectedDestinatinos = ref([])
 
-const destinations = ref([
+const destinos = ref([
     { id: 1, name: 'Arabia Saudita' },
     { id: 2, name: 'Aracena' },
     { id: 3, name: 'Arad' },
@@ -113,7 +113,7 @@ const destinations = ref([
     { id: 10, name: 'Berlín' }
 ])
 
-const carouselDestinations = ref([
+const carouselDestinos = ref([
     {
         id: 1,
         name: 'Europa',
@@ -148,15 +148,15 @@ const carouselDestinations = ref([
 
 const isMobile = ref(false)
 
-const filteredDestinations = computed(() => {
+const filteredDestinatinos = computed(() => {
     if (searchQuery.value.length < 3) return []
 
     const query = searchQuery.value.toLowerCase().trim()
-    const selectedIds = selectedDestinations.value.map(d => d.id)
+    const selectedIds = selectedDestinatinos.value.map(d => d.id)
 
-    return destinations.value.filter(destination =>
-        destination.name.toLowerCase().includes(query) &&
-        !selectedIds.includes(destination.id)
+    return destinos.value.filter(destino =>
+        destino.name.toLowerCase().includes(query) &&
+        !selectedIds.includes(destino.id)
     )
 })
 
@@ -164,13 +164,13 @@ const handleFocus = () => {
     showDropdown.value = true
 
     // Si es mobile y ya hay destino seleccionado, no permitir escribir
-    if (isMobile.value && selectedDestinations.value.length > 0) {
+    if (isMobile.value && selectedDestinatinos.value.length > 0) {
         return
     }
 }
 
 const handleInput = () => {
-    if (isMobile.value && selectedDestinations.value.length > 0) {
+    if (isMobile.value && selectedDestinatinos.value.length > 0) {
         return
     }
 
@@ -188,19 +188,19 @@ const handleInput = () => {
     }
 }
 
-const selectDestination = (destination) => {
+const selectDestino = (destino) => {
     if (isMobile.value) {
-        selectedDestinations.value = [destination]
+        selectedDestinatinos.value = [destino]
     } else {
-        selectedDestinations.value.push(destination)
+        selectedDestinatinos.value.push(destino)
     }
 
     searchQuery.value = ''
     hideDropdown()
 }
 
-const removeDestination = (destinationId) => {
-    selectedDestinations.value = selectedDestinations.value.filter(d => d.id !== destinationId)
+const removeDestino = (destinoId) => {
+    selectedDestinatinos.value = selectedDestinatinos.value.filter(d => d.id !== destinoId)
 }
 
 const handleSearch = () => {
@@ -226,8 +226,8 @@ onMounted(() => {
 
     const handleResize = () => {
         isMobile.value = window.innerWidth < 768
-        if (isMobile.value && selectedDestinations.value.length > 1) {
-            selectedDestinations.value = [selectedDestinations.value[0]]
+        if (isMobile.value && selectedDestinatinos.value.length > 1) {
+            selectedDestinatinos.value = [selectedDestinatinos.value[0]]
         }
     }
 
