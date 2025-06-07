@@ -6,5 +6,6 @@
         <HomeOpinionTripadvisor />
         <HomeOfertas />
         <HomeVueloIncluido />
+        <VentajaBanner />
     </DefaultMain>
 </template>
