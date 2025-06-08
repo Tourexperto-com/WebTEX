@@ -35,7 +35,7 @@
                         @keydown.escape="hideDropdown" />
 
                     <button @click="handleSearch"
-                        class="w-12 h-12 flex justify-center items-center absolute right-2 top-1/2 bg-primary hover:bg-primaryButton-hover focus:bg-primaryButton-focus text-white font-bold rounded-full transform -translate-y-1/2 transition-colors duration-300 focus:outline-none"
+                        class="w-12 h-12 flex justify-center items-center absolute right-1 top-1/2 bg-primary hover:bg-primaryButton-hover focus:bg-primaryButton-focus text-white font-bold rounded-full transform -translate-y-1/2 transition-colors duration-300 focus:outline-none"
                         aria-label="Buscar destino">
                         <div class="flex items-center gap-2">
                             <Icon name="material-symbols:search-rounded" size="1.5rem" />
