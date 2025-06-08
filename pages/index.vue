@@ -9,6 +9,7 @@
         <VentajaBanner />
         <HomeCategorias />
         <HomeReviews />
+        <PrensaCarousel />
         <HomeOperadores />
     </DefaultMain>
 </template>
