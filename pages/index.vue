@@ -8,5 +8,7 @@
         <HomeVueloIncluido />
         <VentajaBanner />
         <HomeCategorias />
+        <HomeReviews />
+        <HomeOperadores />
     </DefaultMain>
 </template>
