@@ -10,6 +10,7 @@
         <HomeCategorias />
         <HomeReviews />
         <PrensaCarousel />
+        <ContactoExpertoNewsletter />
         <HomeOperadores />
     </DefaultMain>
 </template>
