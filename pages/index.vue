@@ -7,5 +7,6 @@
         <HomeOfertas />
         <HomeVueloIncluido />
         <VentajaBanner />
+        <HomeCategorias />
     </DefaultMain>
 </template>
