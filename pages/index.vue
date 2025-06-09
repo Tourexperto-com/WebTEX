@@ -12,5 +12,6 @@
         <PrensaCarousel />
         <ContactoExpertoNewsletter />
         <HomeOperadores />
+        <BlogExplorar />
     </DefaultMain>
 </template>
