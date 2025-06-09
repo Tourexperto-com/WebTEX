@@ -7,8 +7,8 @@
                 class="relative snap-start flex-shrink-0">
                 <NuxtImg :src="categoria.img" :alt="categoria.titulo"
                     class="w-[140px] h-44 object-cover rounded-[18px] shadow-1" />
-                <div class="absolute inset-0 bg-gradient-to-t from-[#200033] via-transparent via-60% to-transparent rounded-[18px]">
-                    <HeadingH3 class="absolute bottom-4 left-3 text-white z-10">{{ categoria.titulo }}</HeadingH3>
+                <div class="flex flex-col justify-end absolute inset-0 bg-gradient-to-t from-[#200033] via-transparent via-60% to-transparent rounded-[18px] px-3 pb-4">
+                    <HeadingH3 class="text-white z-10">{{ categoria.titulo }}</HeadingH3>
                 </div>
             </NuxtLink>
         </CarouselAutoplay>
