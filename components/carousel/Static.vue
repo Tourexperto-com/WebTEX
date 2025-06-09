@@ -1,5 +1,5 @@
 <template>
-    <div class="relative w-full">
+    <div class="w-full relative">
         <button v-if="showLeftArrow" @click="scrollLeft"
             class="w-12 h-12 hidden lg:flex justify-center items-center absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full"
             :disabled="isAtStart" aria-label="Anterior">

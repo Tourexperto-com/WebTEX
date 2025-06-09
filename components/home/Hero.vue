@@ -1,6 +1,6 @@
 <template>
     <DefaultSection class="relative mb-[5.5rem]" style="background-position: 80% 50%;">
-        <NuxtImg src="/images/home/Hero-Mobile.png" alt="" class="w-full min-h-[302px] object-cover relative -z-10" />
+        <NuxtImg src="/images/home/Hero-Mobile.png" alt="" class="w-full min-h-[312px] object-cover relative -z-10" />
         <NuxtImg src="/images/home/Hero-Sticker.webp" alt="" class="w-16 h-16 absolute top-4 right-4" />
 
         <div class="w-full max-w-72 flex flex-col items-center gap-2 absolute z-[2] top-1/2 transform -translate-y-1/2 my-4">
@@ -84,7 +84,7 @@
             </div>
         </div>
         <!-- Carrusel con destinos -->
-        <div class="w-full absolute -bottom-24">
+        <div class="w-full absolute -bottom-[5.75rem]">
             <CarouselStatic>
                 <HomeHeroCard v-for="destino in carouselDestinos" :key="destino.id"
                     :destino="destino" class="w-48 flex-shrink-0 first-of-type:ml-4 last-of-type:mr-4" />

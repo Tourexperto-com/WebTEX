@@ -42,23 +42,3 @@ const props = defineProps({
     }
 });
 </script>
-
-<style scoped>
-.line-clamp-4 {
-    display: -webkit-box;
-    line-clamp: 4;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.4;
-}
-
-@supports not (-webkit-line-clamp: 4) {
-    .line-clamp-4 {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        max-height: calc(1.4em * 4);
-    }
-}
-</style>
