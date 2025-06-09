@@ -5,7 +5,7 @@
             @mouseup="endDrag" @touchstart="startDrag" @touchmove="drag" @touchend="endDrag" @mouseenter="pauseAutoplay"
             @mouseleave="resumeAutoplay">
 
-            <div :class="`w-max flex gap-${gap} pb-2`">
+            <div :class="`w-max flex justify-center gap-${gap} pb-2`">
                 <slot />
             </div>
         </div>
