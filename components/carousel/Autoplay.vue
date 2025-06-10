@@ -5,7 +5,7 @@
             @mouseup="endDrag" @touchstart="startDrag" @touchmove="drag" @touchend="endDrag" @mouseenter="pauseAutoplay"
             @mouseleave="resumeAutoplay">
 
-            <div :class="`w-max flex justify-center gap-${gap} pb-2`">
+            <div class="carousel-wrapper max-content flex pb-2" :style="wrapperStyles">
                 <slot />
             </div>
         </div>
@@ -13,7 +13,7 @@
         <div v-if="showDots && totalSlides > 1" class="flex justify-center gap-2 mt-1">
             <button v-for="(dot, index) in totalSlides" :key="index" @click="goToSlide(index)"
                 class="w-3 h-3 rounded-full transition-colors duration-300"
-                :class="currentSlide === index ? 'bg-primary' : 'bg-gray-mid hover:bg-gray-dark'"
+                :class="currentSlide === index ? 'bg-primary' : 'bg-gray-300 hover:bg-gray-400'"
                 :aria-label="`Ir a la diapositiva ${index + 1}`">
             </button>
         </div>
@@ -27,45 +27,103 @@ const props = defineProps({
     showDots: { type: Boolean, default: false },
     pauseOnInvisible: { type: Boolean, default: true },
     visibilityThreshold: { type: Number, default: 0.5 },
-    gap: { type: String, default: '2' }
+    gap: { type: Number, default: 8 },
+
+    slidesPerView: {
+        type: Object,
+        default: () => ({
+            base: 1.5,
+            sm: 2.5,
+            md: 3.5,
+            lg: 4,
+            xl: 5
+        })
+    }
 })
 
 const emit = defineEmits(['slide-change'])
 
 const container = ref(null)
 const carouselWrapper = ref(null)
+
 const isDragging = ref(false)
 const currentSlide = ref(0)
 const totalSlides = ref(0)
 const isVisible = ref(true)
 const isPaused = ref(false)
+const containerWidth = ref(0)
+const currentBreakpoint = ref('base')
+const slideElements = ref([])
 
 let startX = 0
 let scrollStart = 0
 let autoplayTimer = null
 let intersectionObserver = null
 let scrollTimeout = null
+let resizeObserver = null
 
-const updateSlidePosition = () => {
+const slidesVisible = computed(() => {
+    return props.slidesPerView[currentBreakpoint.value] || props.slidesPerView.base
+})
+
+const wrapperStyles = computed(() => ({
+    gap: `${props.gap}px`,
+    paddingLeft: `${props.gap * 2}px`,
+    paddingRight: `${props.gap * 2}px`
+}))
+
+const updateBreakpoint = () => {
+    const width = window.innerWidth
+    if (width >= 1280) currentBreakpoint.value = 'xl'
+    else if (width >= 1080) currentBreakpoint.value = 'lg'
+    else if (width >= 768) currentBreakpoint.value = 'md'
+    else if (width >= 480) currentBreakpoint.value = 'sm'
+    else currentBreakpoint.value = 'base'
+}
+
+const updateContainerWidth = () => {
+    if (container.value) {
+        containerWidth.value = container.value.clientWidth
+    }
+}
+
+const setupChildrenClasses = async () => {
+    await nextTick()
+
     if (!container.value) return
 
-    const slides = container.value.querySelector('.w-max')?.children
-    if (!slides || slides.length === 0) return
+    const wrapper = container.value.querySelector('.carousel-wrapper')
+    if (!wrapper) return
+
+    const children = wrapper.children
+    const slideWidth = (containerWidth.value - (props.gap * 2)) / slidesVisible.value
+
+    slideElements.value = Array.from(children)
+    slideElements.value.forEach(child => {
+        child.style.width = `${slideWidth}px`
+        child.style.flexShrink = '0'
+        child.classList.add('snap-start')
+    })
+
+    totalSlides.value = children.length
+}
+
+const updateSlidePosition = () => {
+    if (!container.value || slideElements.value.length === 0) return
 
     const containerScrollLeft = container.value.scrollLeft
     let closestSlide = 0
     let minDistance = Infinity
 
-    for (let i = 0; i < slides.length; i++) {
-        const slide = slides[i]
-        const slideLeft = slide.offsetLeft
+    slideElements.value.forEach((slide, i) => {
+        const slideLeft = slide.offsetLeft - (props.gap * 2)
         const distance = Math.abs(slideLeft - containerScrollLeft)
 
         if (distance < minDistance) {
             minDistance = distance
             closestSlide = i
         }
-    }
+    })
 
     if (closestSlide !== currentSlide.value) {
         currentSlide.value = closestSlide
@@ -79,14 +137,13 @@ const handleScroll = () => {
 }
 
 const goToSlide = (slideIndex) => {
-    if (!container.value) return
+    if (!container.value || !slideElements.value[slideIndex]) return
 
-    const slides = container.value.querySelector('.w-max')?.children
-    if (!slides || slideIndex >= slides.length || slideIndex < 0) return
+    const targetSlide = slideElements.value[slideIndex]
+    const targetPosition = targetSlide.offsetLeft - (props.gap * 2)
 
-    const targetSlide = slides[slideIndex]
     container.value.scrollTo({
-        left: targetSlide.offsetLeft,
+        left: targetPosition,
         behavior: 'smooth'
     })
 
@@ -113,7 +170,7 @@ const startAutoplay = () => {
         if (isDragging.value) return
 
         if (!goToNext()) {
-            stopAutoplay()
+            goToSlide(0)
         }
     }, props.autoPlayInterval)
 }
@@ -188,45 +245,41 @@ const setupIntersectionObserver = () => {
     intersectionObserver.observe(carouselWrapper.value)
 }
 
-const calculateTotalSlides = () => {
-    if (!container.value) return
+onMounted(async () => {
+    await nextTick()
 
-    const slides = container.value.querySelector('.w-max')?.children
-    if (!slides || slides.length === 0) return
+    updateBreakpoint()
+    updateContainerWidth()
 
-    const containerWidth = container.value.clientWidth
-    const scrollWidth = container.value.scrollWidth
-    const maxScroll = scrollWidth - containerWidth
-
-    let validSlides = 0
-
-    for (let i = 0; i < slides.length; i++) {
-        const slide = slides[i]
-        const slideLeft = slide.offsetLeft
-
-        if (slideLeft <= maxScroll + 10) {
-            validSlides++
-        }
-    }
-
-    totalSlides.value = validSlides
-}
-
-onMounted(() => {
-    nextTick(() => {
-        calculateTotalSlides()
+    setTimeout(async () => {
+        await setupChildrenClasses()
         updateSlidePosition()
         setupIntersectionObserver()
 
         if (props.autoPlay) {
             startAutoplay()
         }
+    }, 100)
+
+    window.addEventListener('resize', async () => {
+        updateBreakpoint()
+        updateContainerWidth()
+        await setupChildrenClasses()
     })
+
+    if (container.value) {
+        resizeObserver = new ResizeObserver(async () => {
+            updateContainerWidth()
+            await setupChildrenClasses()
+        })
+        resizeObserver.observe(container.value)
+    }
 })
 
 onUnmounted(() => {
     if (scrollTimeout) clearTimeout(scrollTimeout)
     if (intersectionObserver) intersectionObserver.disconnect()
+    if (resizeObserver) resizeObserver.disconnect()
     stopAutoplay()
 })
 
@@ -251,10 +304,5 @@ defineExpose({
 
 .snap-x {
     scroll-behavior: smooth;
-}
-
-:slotted(*) {
-    scroll-snap-align: start;
-    flex-shrink: 0;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
     <DefaultSection>
         <HeadingH2>Tours con vuelo incluido</HeadingH2>
-        <CarouselStatic>
-            <HomeVueloIncluidoCard v-for="(producto, index) in productos" :key="index" :producto="producto"
+        <CarouselStatic :slides-per-view="{base: 1.5, sm: 2.25, md: 3.5, lg: 5, lg: 6}">
+            <ProductCard v-for="(producto, index) in productos" :key="index" :producto="producto"
                 class="w-48 flex-shrink-0 first-of-type:ml-4 last-of-type:mr-4" />
         </CarouselStatic>
         <ButtonPrimary>Ver más tours con aéreos</ButtonPrimary>
@@ -11,11 +11,10 @@
 
 
 <script setup>
-import { HomeVueloIncluidoCard } from '#components';
-
 const productos = [
     {
         url: '#',
+        incluido: true,
         titulo: 'Madrid, París, Alpes e Italia "clásico"',
         img: '/images/product/product.jpg',
         sticker: '/images/product/sticker.png',
@@ -28,6 +27,7 @@ const productos = [
     },
     {
         url: '#',
+        incluido: true,
         titulo: 'Londres, Amsterdam y Bruselas',
         img: '/images/product/product.jpg',
         sticker: '/images/product/sticker.png',
@@ -39,6 +39,7 @@ const productos = [
     },
     {
         url: '#',
+        incluido: true,
         titulo: 'Circuito por Escandinavia',
         img: '/images/product/product.jpg',
         duracion: '15 días/14 noches',
@@ -50,6 +51,7 @@ const productos = [
     },
     {
         url: '#',
+        incluido: true,
         titulo: 'Barcelona, Niza y Roma Express',
         img: '/images/product/product.jpg',
         duracion: '10 días/9 noches',
@@ -61,6 +63,7 @@ const productos = [
     },
     {
         url: '#',
+        incluido: true,
         titulo: 'Praga, Viena y Budapest Imperial',
         img: '/images/product/product.jpg',
         sticker: '/images/product/sticker.png',
@@ -73,6 +76,7 @@ const productos = [
     },
     {
         url: '#',
+        incluido: true,
         titulo: 'Grecia Clásica y Islas',
         img: '/images/product/product.jpg',
         sticker: '/images/product/sticker.png',
@@ -85,6 +89,7 @@ const productos = [
     },
     {
         url: '#',
+        incluido: true,
         titulo: 'Suiza y Alemania Romántica',
         img: '/images/product/product.jpg',
         sticker: '/images/product/sticker.png',

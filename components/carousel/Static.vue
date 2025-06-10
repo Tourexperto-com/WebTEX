@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full relative">
+    <div class="relative w-full" ref="carouselWrapper">
         <button v-if="showLeftArrow" @click="scrollLeft"
             class="w-12 h-12 hidden lg:flex justify-center items-center absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full"
             :disabled="isAtStart" aria-label="Anterior">
@@ -9,7 +9,8 @@
         <div ref="container" class="scrollbar-hide overflow-x-auto cursor-grab select-none"
             :class="{ 'cursor-grabbing': isDragging }" @scroll="updateArrows" @mousedown="startDrag" @mousemove="drag"
             @mouseup="endDrag" @mouseleave="endDrag" @touchstart="startDrag" @touchmove="drag" @touchend="endDrag">
-            <div class="w-max flex gap-2 pb-2">
+
+            <div class="carousel-wrapper max-content flex pb-2" :style="wrapperStyles">
                 <slot />
             </div>
         </div>
@@ -24,19 +25,69 @@
 
 <script setup>
 const props = defineProps({
-    scrollAmount: { type: Number, default: 280 }
+    gap: {
+        type: Number,
+        default: 8
+    },
+
+    slidesPerView: {
+        type: Object,
+        default: () => ({
+            base: 1.5,
+            sm: 2.5, 
+            md: 3.5,
+            lg: 4,
+            xl: 5
+        })
+    }
 })
 
 const container = ref(null)
+const carouselWrapper = ref(null)
+
 const isAtStart = ref(true)
 const isAtEnd = ref(false)
 const isDragging = ref(false)
+const containerWidth = ref(0)
+const currentBreakpoint = ref('base')
 
 let startX = 0
 let scrollStart = 0
+let resizeObserver = null
 
 const showLeftArrow = computed(() => !isAtStart.value)
 const showRightArrow = computed(() => !isAtEnd.value)
+
+const slidesVisible = computed(() => {
+    return props.slidesPerView[currentBreakpoint.value] || props.slidesPerView.base
+})
+
+const scrollAmount = computed(() => {
+    if (!containerWidth.value) return 280
+    const slideWidth = containerWidth.value / slidesVisible.value
+    return slideWidth * Math.floor(slidesVisible.value)
+})
+
+const wrapperStyles = computed(() => ({
+    gap: `${props.gap}px`,
+    paddingLeft: `${props.gap * 2}px`,
+    paddingRight: `${props.gap * 2}px`
+}))
+
+const updateBreakpoint = () => {
+    const width = window.innerWidth
+    if (width >= 1280) currentBreakpoint.value = 'xl'
+    else if (width >= 1080) currentBreakpoint.value = 'lg'
+    else if (width >= 768) currentBreakpoint.value = 'md'
+    else if (width >= 480) currentBreakpoint.value = 'sm'
+    else currentBreakpoint.value = 'base'
+}
+
+const updateContainerWidth = () => {
+    if (container.value) {
+        containerWidth.value = container.value.clientWidth
+    }
+}
 
 const updateArrows = () => {
     if (!container.value) return
@@ -47,11 +98,17 @@ const updateArrows = () => {
 }
 
 const scrollLeft = () => {
-    container.value?.scrollBy({ left: -props.scrollAmount, behavior: 'smooth' })
+    container.value?.scrollBy({
+        left: -scrollAmount.value,
+        behavior: 'smooth'
+    })
 }
 
 const scrollRight = () => {
-    container.value?.scrollBy({ left: props.scrollAmount, behavior: 'smooth' })
+    container.value?.scrollBy({
+        left: scrollAmount.value,
+        behavior: 'smooth'
+    })
 }
 
 const startDrag = (e) => {
@@ -74,13 +131,53 @@ const endDrag = () => {
     isDragging.value = false
 }
 
-onMounted(() => {
+const setupChildrenClasses = () => {
+    nextTick(() => {
+        if (!container.value) return
+
+        const wrapper = container.value.querySelector('.carousel-wrapper')
+        if (!wrapper) return
+
+        const children = wrapper.children
+        const slideWidth = (containerWidth.value - (props.gap * 2)) / slidesVisible.value
+
+        Array.from(children).forEach(child => {
+            child.style.width = `${slideWidth}px`
+            child.style.flexShrink = '0'
+        })
+    })
+}
+
+onMounted(async () => {
+    await nextTick()
+
+    updateBreakpoint()
+    updateContainerWidth()
     updateArrows()
 
-    const observer = new ResizeObserver(updateArrows)
-    observer.observe(container.value)
+    setupChildrenClasses()
 
-    onUnmounted(() => observer.disconnect())
+    window.addEventListener('resize', updateBreakpoint)
+    window.addEventListener('resize', updateContainerWidth)
+    window.addEventListener('resize', setupChildrenClasses)
+
+    if (container.value) {
+        resizeObserver = new ResizeObserver(() => {
+            updateContainerWidth()
+            setupChildrenClasses()
+        })
+        resizeObserver.observe(container.value)
+    }
+})
+
+onUnmounted(() => {
+    window.removeEventListener('resize', updateBreakpoint)
+    window.removeEventListener('resize', updateContainerWidth)
+    window.removeEventListener('resize', setupChildrenClasses)
+
+    if (resizeObserver) {
+        resizeObserver.disconnect()
+    }
 })
 
 defineExpose({ scrollLeft, scrollRight })

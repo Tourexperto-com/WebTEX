@@ -1,7 +1,7 @@
 <template>
     <DefaultSection>
         <HeadingH2>Nuestros viajeros nos cuentan</HeadingH2>
-        <CarouselStatic>
+        <CarouselStatic :slides-per-view="{base: 1.5, sm: 2.25, md: 3.5, lg: 5, lg: 6}">
             <ReviewCard v-for="(review, index) in reviews" :key="index" :review="review" />
         </CarouselStatic>
     </DefaultSection>
