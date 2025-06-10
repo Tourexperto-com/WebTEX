@@ -5,16 +5,16 @@
             @mouseup="endDrag" @touchstart="startDrag" @touchmove="drag" @touchend="endDrag" @mouseenter="pauseAutoplay"
             @mouseleave="resumeAutoplay">
 
-            <div class="carousel-wrapper max-content flex pb-2" :style="wrapperStyles">
+            <div class="carousel-wrapper flex" :style="wrapperStyles">
                 <slot />
             </div>
         </div>
 
-        <div v-if="showDots && totalSlides > 1" class="flex justify-center gap-2 mt-1">
-            <button v-for="(dot, index) in totalSlides" :key="index" @click="goToSlide(index)"
+        <div v-if="showDots && totalPages > 1" class="flex justify-center gap-2 mt-3">
+            <button v-for="(dot, index) in totalPages" :key="index" @click="goToPage(index)"
                 class="w-3 h-3 rounded-full transition-colors duration-300"
-                :class="currentSlide === index ? 'bg-primary' : 'bg-gray-300 hover:bg-gray-400'"
-                :aria-label="`Ir a la diapositiva ${index + 1}`">
+                :class="currentPage === index ? 'bg-primary' : 'bg-gray-mid hover:bg-gray-dark'"
+                :aria-label="`Ir a la página ${index + 1}`">
             </button>
         </div>
     </div>
@@ -28,6 +28,7 @@ const props = defineProps({
     pauseOnInvisible: { type: Boolean, default: true },
     visibilityThreshold: { type: Number, default: 0.5 },
     gap: { type: Number, default: 8 },
+    slidesToScroll: { type: Number, default: 1 },
 
     slidesPerView: {
         type: Object,
@@ -41,14 +42,16 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['slide-change'])
+const emit = defineEmits(['slide-change', 'page-change'])
 
 const container = ref(null)
 const carouselWrapper = ref(null)
 
 const isDragging = ref(false)
 const currentSlide = ref(0)
+const currentPage = ref(0)
 const totalSlides = ref(0)
+const totalPages = ref(0)
 const isVisible = ref(true)
 const isPaused = ref(false)
 const containerWidth = ref(0)
@@ -66,11 +69,14 @@ const slidesVisible = computed(() => {
     return props.slidesPerView[currentBreakpoint.value] || props.slidesPerView.base
 })
 
-const wrapperStyles = computed(() => ({
-    gap: `${props.gap}px`,
-    paddingLeft: `${props.gap * 2}px`,
-    paddingRight: `${props.gap * 2}px`
-}))
+const wrapperStyles = computed(() => {
+    const leftPadding = (containerWidth.value - (Math.floor(slidesVisible.value) * (containerWidth.value / slidesVisible.value))) / 2
+    return {
+        gap: `${props.gap}px`,
+        paddingLeft: `${leftPadding}px`,
+        paddingRight: `${leftPadding}px`
+    }
+})
 
 const updateBreakpoint = () => {
     const width = window.innerWidth
@@ -96,7 +102,7 @@ const setupChildrenClasses = async () => {
     if (!wrapper) return
 
     const children = wrapper.children
-    const slideWidth = (containerWidth.value - (props.gap * 2)) / slidesVisible.value
+    const slideWidth = (containerWidth.value / slidesVisible.value) - (props.gap * (slidesVisible.value - 1) / slidesVisible.value)
 
     slideElements.value = Array.from(children)
     slideElements.value.forEach(child => {
@@ -106,41 +112,47 @@ const setupChildrenClasses = async () => {
     })
 
     totalSlides.value = children.length
+
+    const visibleSlides = Math.floor(slidesVisible.value)
+    const maxScrollableSlides = Math.max(0, totalSlides.value - visibleSlides)
+    totalPages.value = Math.ceil((maxScrollableSlides + props.slidesToScroll) / props.slidesToScroll)
 }
 
 const updateSlidePosition = () => {
     if (!container.value || slideElements.value.length === 0) return
 
     const containerScrollLeft = container.value.scrollLeft
-    let closestSlide = 0
-    let minDistance = Infinity
+    const slideWidth = slideElements.value[0]?.offsetWidth || 0
+    const gap = props.gap
 
-    slideElements.value.forEach((slide, i) => {
-        const slideLeft = slide.offsetLeft - (props.gap * 2)
-        const distance = Math.abs(slideLeft - containerScrollLeft)
-
-        if (distance < minDistance) {
-            minDistance = distance
-            closestSlide = i
-        }
-    })
+    let closestSlide = Math.round(containerScrollLeft / (slideWidth + gap))
+    closestSlide = Math.max(0, Math.min(closestSlide, totalSlides.value - 1))
 
     if (closestSlide !== currentSlide.value) {
         currentSlide.value = closestSlide
         emit('slide-change', closestSlide)
+
+        const newPage = Math.floor(closestSlide / props.slidesToScroll)
+        if (newPage !== currentPage.value && newPage < totalPages.value) {
+            currentPage.value = newPage
+            emit('page-change', newPage)
+        }
     }
 }
 
 const handleScroll = () => {
     if (scrollTimeout) clearTimeout(scrollTimeout)
-    scrollTimeout = setTimeout(updateSlidePosition, 100)
+    scrollTimeout = setTimeout(updateSlidePosition, 50)
 }
 
 const goToSlide = (slideIndex) => {
     if (!container.value || !slideElements.value[slideIndex]) return
 
-    const targetSlide = slideElements.value[slideIndex]
-    const targetPosition = targetSlide.offsetLeft - (props.gap * 2)
+    const slideWidth = slideElements.value[0]?.offsetWidth || 0
+    const gap = props.gap
+    const leftPadding = parseFloat(getComputedStyle(container.value.querySelector('.carousel-wrapper')).paddingLeft) || 0
+
+    const targetPosition = (slideIndex * (slideWidth + gap)) - leftPadding + leftPadding
 
     container.value.scrollTo({
         left: targetPosition,
@@ -152,10 +164,19 @@ const goToSlide = (slideIndex) => {
     setTimeout(resumeAutoplay, 3000)
 }
 
+const goToPage = (pageIndex) => {
+    if (pageIndex < 0 || pageIndex >= totalPages.value) return
+
+    const targetSlideIndex = Math.min(pageIndex * props.slidesToScroll, totalSlides.value - Math.floor(slidesVisible.value))
+
+    goToSlide(targetSlideIndex)
+    currentPage.value = pageIndex
+}
+
 const goToNext = () => {
-    const nextSlide = currentSlide.value + 1
-    if (nextSlide < totalSlides.value) {
-        goToSlide(nextSlide)
+    const nextPage = currentPage.value + 1
+    if (nextPage < totalPages.value) {
+        goToPage(nextPage)
         return true
     }
     return false
@@ -170,7 +191,7 @@ const startAutoplay = () => {
         if (isDragging.value) return
 
         if (!goToNext()) {
-            goToSlide(0)
+            goToPage(0)
         }
     }, props.autoPlayInterval)
 }
@@ -285,10 +306,13 @@ onUnmounted(() => {
 
 defineExpose({
     goToSlide,
+    goToPage,
     startAutoplay,
     stopAutoplay,
     currentSlide: readonly(currentSlide),
-    totalSlides: readonly(totalSlides)
+    currentPage: readonly(currentPage),
+    totalSlides: readonly(totalSlides),
+    totalPages: readonly(totalPages)
 })
 </script>
 
