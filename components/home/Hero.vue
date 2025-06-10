@@ -1,12 +1,12 @@
 <template>
     <DefaultSection class="relative" style="background-position: 80% 50%;">
         <NuxtImg src="/images/home/Hero-Mobile.png" alt=""
-            class="w-full min-h-[19.5rem] object-cover relative -z-10 lg:rounded-[36px]" />
-        <NuxtImg src="/images/home/Hero-Sticker.webp" alt="" class="w-16 h-16 absolute top-4 right-4" />
+            class="w-full min-h-[19.5rem] lg:min-h-[28.75rem] object-cover relative -z-10 lg:rounded-[36px]" />
+        <NuxtImg src="/images/home/Hero-Sticker.webp" alt="" class="w-16 lg:w-24 h-16 lg:h-24 absolute top-4 lg:top-8 right-4 lg:right-[4.5rem]" />
 
         <div
-            class="w-full max-w-72 lg:max-w-[50.5rem] flex flex-col items-center gap-2 absolute z-[2] top-[4.75rem] py-4">
-            <div class="w-full lg:max-w-[47rem] lg:flex lg:flex-col lg:gap-2">
+            class="w-full max-w-72 lg:max-w-[50.5rem] flex flex-col items-center gap-2 absolute z-[2] top-[4.75rem] lg:top-[10.25rem] py-4 lg:pt-0 lg:pb-6">
+            <div class="w-full lg:max-w-[47rem] lg:flex lg:flex-col lg:gap-2 lg:mb-4">
                 <HeadingH1 class="text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.15)]">
                     Planificar el viaje de tus sueños nunca fue tan fácil.
                 </HeadingH1>
@@ -24,7 +24,7 @@
                         class="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
                         <div class="flex flex-wrap gap-1">
                             <div v-for="destino in selectedDestinatinos" :key="destino.id"
-                                class="flex items-center gap-0.5 bg-secondary rounded-xl text-white text-xs pl-3 pr-1 py-[0.375rem]">
+                                class="flex items-center gap-0.5 bg-secondary rounded-xl text-white text-xs lg:text-sm pl-3 pr-1 py-[0.375rem]">
                                 <span>{{ destino.name }}</span>
                                 <button @click="removeDestino(destino.id)"
                                     class="flex justify-center items-center hover:text-gray-light transition-colors"
@@ -38,16 +38,16 @@
                     <input v-model="searchQuery" type="text" id="searchInput"
                         :placeholder="selectedDestinatinos.length === 0 ? '¿Dónde quieres viajar?' : ''"
                         :readonly="isMobile && selectedDestinatinos.length > 0"
-                        class="w-full rounded-full border-0 text-gray-extraDark placeholder-gray-dark placeholder:text-xs placeholder:font-semibold focus:outline-none text-xs py-5 px-6"
+                        class="w-full rounded-full border-0 text-gray-extraDark text-xs lg:text-base placeholder-gray-dark placeholder:text-xs lg:placeholder:text-base placeholder:font-semibold focus:outline-none py-5 lg:py-[18px] px-6"
                         @input="handleInput" @focus="handleFocus" @keyup.enter="handleSearch"
                         @keydown.escape="hideDropdown" />
 
                     <button @click="handleSearch"
-                        class="w-12 h-12 flex justify-center items-center absolute right-1 top-1/2 bg-primary hover:bg-primaryButton-hover focus:bg-primaryButton-focus text-white font-bold rounded-full transform -translate-y-1/2 transition-colors duration-300 focus:outline-none"
+                        class="w-12 lg:w-auto h-12 lg:h-auto flex justify-center items-center absolute right-1 top-1/2 bg-primary hover:bg-primaryButton-hover focus:bg-primaryButton-focus text-white font-bold rounded-full transform -translate-y-1/2 transition-colors duration-300 focus:outline-none lg:py-3 lg:px-6"
                         aria-label="Buscar destino">
                         <div class="flex items-center gap-2">
                             <Icon name="material-symbols:search-rounded" size="1.5rem" />
-                            <p class="hidden xl:inline">Buscar</p>
+                            <p class="hidden lg:inline">Buscar</p>
                         </div>
                     </button>
                 </div>
@@ -57,19 +57,19 @@
                     class="w-max absolute top-full left-4 right-0 bg-white border border-gray-dark rounded-xl overflow-hidden mt-1">
 
                     <div v-if="isMobile && selectedDestinatinos.length > 0"
-                        class="text-gray-dark font-semibold text-xs p-4">
+                        class="text-gray-dark font-semibold text-xs lg:text-sm p-4">
                         Solo puedes elegir un destino
                     </div>
 
-                    <div v-else-if="searchQuery.length < 3" class="text-gray-dark font-semibold text-xs p-4">
+                    <div v-else-if="searchQuery.length < 3" class="text-gray-dark font-semibold text-xs lg:text-sm p-4">
                         Ingresa 3 o más caracteres
                     </div>
 
-                    <div v-else-if="isLoading" class="text-gray-dark font-semibold text-xs p-4">
+                    <div v-else-if="isLoading" class="text-gray-dark font-semibold text-xs lg:text-sm p-4">
                         Buscando...
                     </div>
 
-                    <div v-else-if="filteredDestinatinos.length === 0" class="text-gray-dark font-semibold text-xs p-4">
+                    <div v-else-if="filteredDestinatinos.length === 0" class="text-gray-dark font-semibold text-xs lg:text-sm p-4">
                         No se encontraron resultados
                     </div>
 
@@ -77,7 +77,7 @@
                         <button v-for="destino in filteredDestinatinos" :key="destino.id"
                             @click="selectDestino(destino)"
                             class="min-w-44 flex flex-col text-left hover:bg-violet-light/10 transition-colors duration-300 focus:outline-none px-4 py-3">
-                            <div class="text-xs text-gray-dark font-semibold">{{ destino.name }}</div>
+                            <div class="text-xs lg:text-sm text-gray-dark font-semibold">{{ destino.name }}</div>
                         </button>
                     </div>
                 </div>
@@ -86,15 +86,16 @@
             <!-- Promocion -->
             <div
                 class="w-max flex items-center justify-center gap-1 z-[-1] bg-primary text-white rounded-full py-[0.375rem] pl-2 pr-3">
-                <Icon name="material-symbols:check-circle-outline-rounded" />
-                <p class="font-medium text-xs">
+                <Icon name="material-symbols:check-circle-outline-rounded" class="lg:w-5 lg:h-5" />
+                <p class="lg:hidden font-medium text-xs">
                     Reserva con el 20% y paga en cuotas.
                 </p>
+                <p class="hidden lg:inline text-sm">Reserva con el 20% y pagá el resto en cuotas fijas sin interés</p>
             </div>
         </div>
         <!-- Carrusel con destinos -->
-        <div class="w-full -mt-16">
-            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 2.25, md: 3.5, lg: 5, xl: 6 }">
+        <div class="w-full max-w-[808px] -mt-16">
+            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 2.25, md: 3.5, lg: 4.15, xl: 6 }">
                 <HomeHeroCard v-for="destino in carouselDestinos" :key="destino.id" :destino="destino" />
             </CarouselStatic>
         </div>

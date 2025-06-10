@@ -1,7 +1,7 @@
 <template>
     <div class="relative w-full" ref="carouselWrapper">
         <button v-if="showLeftArrow" @click="scrollLeft"
-            class="w-12 h-12 hidden lg:flex justify-center items-center absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full"
+            class="w-12 h-12 hidden lg:flex justify-center items-center absolute left-2 lg:-left-6 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full"
             :disabled="isAtStart" aria-label="Anterior">
             <Icon name="material-symbols:chevron-left-rounded" size="3rem" class="text-primary" />
         </button>
@@ -17,7 +17,7 @@
         </div>
 
         <button v-if="showRightArrow" @click="scrollRight"
-            class="w-12 h-12 hidden lg:flex justify-center items-center absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full"
+            class="w-12 h-12 hidden lg:flex justify-center items-center absolute right-2 lg:-right-6 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full"
             :disabled="isAtEnd" aria-label="Siguiente">
             <Icon name="material-symbols:chevron-right-rounded" size="3rem" class="text-primary" />
         </button>
