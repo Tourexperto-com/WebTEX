@@ -1,12 +1,20 @@
 <template>
-    <DefaultSection class="relative mb-[5.5rem]" style="background-position: 80% 50%;">
-        <NuxtImg src="/images/home/Hero-Mobile.png" alt="" class="w-full min-h-[312px] object-cover relative -z-10" />
+    <DefaultSection class="relative" style="background-position: 80% 50%;">
+        <NuxtImg src="/images/home/Hero-Mobile.png" alt=""
+            class="w-full min-h-[19.5rem] object-cover relative -z-10 lg:rounded-[36px]" />
         <NuxtImg src="/images/home/Hero-Sticker.webp" alt="" class="w-16 h-16 absolute top-4 right-4" />
 
-        <div class="w-full max-w-72 flex flex-col items-center gap-2 absolute z-[2] top-1/2 transform -translate-y-1/2 my-4">
-            <HeadingH1 class="text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.15)]">
-                Planificar el viaje de tus sueños nunca fue tan fácil.
-            </HeadingH1>
+        <div
+            class="w-full max-w-72 lg:max-w-[50.5rem] flex flex-col items-center gap-2 absolute z-[2] top-[4.75rem] py-4">
+            <div class="w-full lg:max-w-[47rem] lg:flex lg:flex-col lg:gap-2">
+                <HeadingH1 class="text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.15)]">
+                    Planificar el viaje de tus sueños nunca fue tan fácil.
+                </HeadingH1>
+                <p class="hidden lg:inline text-white text-xl font-semibold">
+                    Transporte, alojamiento y actividades organizadas en todos nuestros tours,
+                    para que tu única preocupación sea disfrutar cada momento.
+                </p>
+            </div>
 
             <div class="w-full flex flex-col items-center relative" ref="searchContainer">
                 <!-- Search -->
@@ -48,7 +56,8 @@
                 <div v-if="showDropdown"
                     class="w-max absolute top-full left-4 right-0 bg-white border border-gray-dark rounded-xl overflow-hidden mt-1">
 
-                    <div v-if="isMobile && selectedDestinatinos.length > 0" class="text-gray-dark font-semibold text-xs p-4">
+                    <div v-if="isMobile && selectedDestinatinos.length > 0"
+                        class="text-gray-dark font-semibold text-xs p-4">
                         Solo puedes elegir un destino
                     </div>
 
@@ -84,10 +93,9 @@
             </div>
         </div>
         <!-- Carrusel con destinos -->
-        <div class="w-full absolute -bottom-24">
-            <CarouselStatic :slides-per-view="{base: 1.5, sm: 2.25, md: 3.5, lg: 5, lg: 6}">
-                <HomeHeroCard v-for="destino in carouselDestinos" :key="destino.id"
-                    :destino="destino" class="w-48 flex-shrink-0 first-of-type:ml-4 last-of-type:mr-4" />
+        <div class="w-full -mt-16">
+            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 2.25, md: 3.5, lg: 5, xl: 6 }">
+                <HomeHeroCard v-for="destino in carouselDestinos" :key="destino.id" :destino="destino" />
             </CarouselStatic>
         </div>
     </DefaultSection>

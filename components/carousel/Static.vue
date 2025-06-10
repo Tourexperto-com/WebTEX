@@ -10,8 +10,9 @@
             :class="{ 'cursor-grabbing': isDragging }" @scroll="updateArrows" @mousedown="startDrag" @mousemove="drag"
             @mouseup="endDrag" @mouseleave="endDrag" @touchstart="startDrag" @touchmove="drag" @touchend="endDrag">
 
-            <div class="carousel-wrapper max-content flex pb-2" :style="wrapperStyles">
+            <div class="carousel-wrapper flex pb-2" :style="wrapperStyles">
                 <slot />
+                <div class="carousel-spacer" :style="spacerStyles" aria-hidden="true"></div>
             </div>
         </div>
 
@@ -34,7 +35,7 @@ const props = defineProps({
         type: Object,
         default: () => ({
             base: 1.5,
-            sm: 2.5, 
+            sm: 2.5,
             md: 3.5,
             lg: 4,
             xl: 5
@@ -71,15 +72,21 @@ const scrollAmount = computed(() => {
 const wrapperStyles = computed(() => ({
     gap: `${props.gap}px`,
     paddingLeft: `${props.gap * 2}px`,
-    paddingRight: `${props.gap * 2}px`
+    width: 'max-content'
+}))
+
+const spacerStyles = computed(() => ({
+    width: `${props.gap}px`,
+    height: '1px',
+    flexShrink: 0
 }))
 
 const updateBreakpoint = () => {
     const width = window.innerWidth
     if (width >= 1280) currentBreakpoint.value = 'xl'
-    else if (width >= 1080) currentBreakpoint.value = 'lg'
+    else if (width >= 1024) currentBreakpoint.value = 'lg'
     else if (width >= 768) currentBreakpoint.value = 'md'
-    else if (width >= 480) currentBreakpoint.value = 'sm'
+    else if (width >= 640) currentBreakpoint.value = 'sm'
     else currentBreakpoint.value = 'base'
 }
 
@@ -138,10 +145,10 @@ const setupChildrenClasses = () => {
         const wrapper = container.value.querySelector('.carousel-wrapper')
         if (!wrapper) return
 
-        const children = wrapper.children
+        const children = Array.from(wrapper.children).filter(child => !child.classList.contains('carousel-spacer'))
         const slideWidth = (containerWidth.value - (props.gap * 2)) / slidesVisible.value
 
-        Array.from(children).forEach(child => {
+        children.forEach(child => {
             child.style.width = `${slideWidth}px`
             child.style.flexShrink = '0'
         })
@@ -191,5 +198,9 @@ defineExpose({ scrollLeft, scrollRight })
 
 .scrollbar-hide::-webkit-scrollbar {
     display: none;
+}
+
+.carousel-spacer {
+    pointer-events: none;
 }
 </style>
