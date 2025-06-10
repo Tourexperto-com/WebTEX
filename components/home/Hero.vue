@@ -11,7 +11,7 @@
             <div class="w-full flex flex-col items-center relative" ref="searchContainer">
                 <!-- Search -->
                 <div class="w-full relative">
-                    <!-- Destinos seleccionados DENTRO del input -->
+                    <!-- Destinos seleccionados dentro del input -->
                     <div v-if="selectedDestinatinos.length > 0"
                         class="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
                         <div class="flex flex-wrap gap-1">
@@ -84,8 +84,8 @@
             </div>
         </div>
         <!-- Carrusel con destinos -->
-        <div class="w-full absolute -bottom-[5.75rem]">
-            <CarouselStatic>
+        <div class="w-full absolute -bottom-24">
+            <CarouselStatic :slides-per-view="{base: 1.5, sm: 2.25, md: 3.5, lg: 5, lg: 6}">
                 <HomeHeroCard v-for="destino in carouselDestinos" :key="destino.id"
                     :destino="destino" class="w-48 flex-shrink-0 first-of-type:ml-4 last-of-type:mr-4" />
             </CarouselStatic>

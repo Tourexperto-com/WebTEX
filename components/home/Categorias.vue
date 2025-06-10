@@ -2,12 +2,13 @@
     <DefaultSection class="px-4">
         <HeadingH2 class="text-center text-secondary">Elige tu próxima aventura de viaje por categoría</HeadingH2>
 
-        <CarouselAutoplay :auto-play="true" :auto-play-interval="2500" :show-dots="true" gap="2">
+        <CarouselAutoplay :auto-play="true" :auto-play-interval="2500" :show-dots="true" :slides-per-view="{base: 2, sm: 3, md: 4, lg: 5, lg: 6}" class="pl-2">
             <NuxtLink to="#" v-for="(categoria, index) in categorias" :key="index"
                 class="relative snap-start flex-shrink-0">
                 <NuxtImg :src="categoria.img" :alt="categoria.titulo"
-                    class="w-[140px] h-44 object-cover rounded-[18px] shadow-1" />
-                <div class="flex flex-col justify-end absolute inset-0 bg-gradient-to-t from-[#200033] via-transparent via-60% to-transparent rounded-[18px] px-3 pb-4">
+                    class="object-cover rounded-[18px]" />
+                <div
+                    class="flex flex-col justify-end absolute inset-0 bg-gradient-to-t from-[#200033] via-transparent via-60% to-transparent rounded-[18px] px-3 pb-4">
                     <HeadingH3 class="text-white z-10">{{ categoria.titulo }}</HeadingH3>
                 </div>
             </NuxtLink>

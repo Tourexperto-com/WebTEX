@@ -1,7 +1,7 @@
 <template>
     <section>
-        <CarouselStatic>
-            <NuxtImg v-for="(item, index) in banners" :key="index" :src="item.img" :alt="item.alt" class="h-52 rounded-[18px] shadow-1 first-of-type:ml-4 last-of-type:mr-4" />
+        <CarouselStatic :slides-per-view="{base: 1.2, sm: 2.2, md: 3}">
+            <NuxtImg v-for="(item, index) in banners" :key="index" :src="item.img" :alt="item.alt" class="h-full object-contain rounded-[18px] shadow-1 first-of-type:ml-4 last-of-type:mr-4" />
         </CarouselStatic>
     </section>
 </template>

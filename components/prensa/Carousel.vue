@@ -8,10 +8,10 @@
             </div>
         </div>
         <div class="w-full -mt-[3.5rem]">
-            <CarouselStatic>
+            <CarouselStatic :slides-per-view="{base: 1.5, sm: 2.25, md: 3.5, lg: 5, lg: 6}">
                 <NuxtLink to="#" v-for="(item, index) in notas" :key="index"
-                    class="w-52 flex flex-col gap-2 bg-gray-extraLight rounded-[18px] shadow-1 p-2 pb-3 first-of-type:ml-4 last-of-type:mr-4">
-                    <NuxtImg :src="item.img" :alt="item.alt" class="w-48 h-12 rounded-[12px]" />
+                    class="flex flex-col gap-2 bg-gray-extraLight rounded-[18px] shadow-1 p-2 pb-3 first-of-type:ml-4 last-of-type:mr-4">
+                    <NuxtImg :src="item.img" :alt="item.alt" class="object-cover rounded-[12px]" />
                     <p class="text-xs font-semibold text-secondary">{{ item.texto }}</p>
                 </NuxtLink>
             </CarouselStatic>
