@@ -4,7 +4,7 @@
             <NuxtImg v-for="(item, index) in banners" :key="index" :src="item.img" :alt="item.alt" class="rounded-[18px] shadow-1" />
         </CarouselStatic>
         <div class="hidden lg:flex gap-4">
-            <NuxtImg v-for="(item, index) in bannersDesktop" :key="index" :src="item.img" :alt="item.alt" class="w-full rounded-[36px]" />
+            <NuxtImg v-for="(item, index) in bannersDesktop" :key="index" :src="item.img" :alt="item.alt" class="first:w-1/2 w-1/4 rounded-[36px]" />
         </div>
     </section>
 </template>
