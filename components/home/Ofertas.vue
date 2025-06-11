@@ -1,21 +1,23 @@
 <template>
-    <DefaultSection class="!gap-0">
-        <div class="w-full flex flex-col items-center gap-3 bg-gradient-violet pt-6 pb-28">
-            <div class="flex flex-col items-center gap-2">
-                <HeadingH2 class="text-white">Ofertas especiales</HeadingH2>
-                <p class="text-center text-white text-sm">Explora nuestros tours con descuentos</p>
+    <DefaultSection
+        class="lg:flex lg:flex-col lg:!gap-6 !gap-0 lg:bg-gradient-violet lg:rounded-[36px] lg:p-12 lg:pb-6">
+        <div
+            class="w-full flex flex-col items-center lg:items-start gap-3 bg-gradient-violet lg:bg-none pt-6 pb-28 lg:p-0">
+            <div class="lg:w-full flex flex-col items-center lg:items-start gap-2">
+                <HeadingH2 class="text-light !font-bold">Ofertas especiales</HeadingH2>
+                <p class="text-center text-light text-sm lg:text-xl">Explora nuestros tours con descuentos</p>
             </div>
             <ButtonPrimary>Ver tours en oferta</ButtonPrimary>
         </div>
-        <div class="w-full -mt-[5.5rem]">
-            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 2.25, md: 3.5, lg: 5, lg: 6 }">
+        <div class="w-full -mt-[5.5rem] lg:mt-0">
+            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 1.5, md: 1.5, lg: 3, xl: 6 }">
                 <NuxtLink :to="oferta.url" v-for="(oferta, index) in ofertas" :key="index"
-                    class="min-w-[214px] flex flex-col gap-2 relative bg-white rounded-[18px] shadow-1 p-2 pb-3">
+                    class="flex flex-col gap-2 relative bg-light rounded-[18px] shadow-1 p-2 pb-3">
                     <NuxtImg :src="oferta.img" :alt="`${oferta.descuento} ${oferta.descripcion}`"
-                        class="w-full h-28 object-cover rounded-[10px]" />
+                        class="w-full h-28 lg:h-32 object-cover rounded-[10px]" />
                     <NuxtImg v-if="oferta.sticker" :src="oferta.sticker" alt=""
                         class="w-16 h-16 absolute top-5 right-5" />
-                    <p class="text-sm text-primary font-bold px-2">{{ oferta.descuento }} <span
+                    <p class="text-sm lg:text-base text-primary font-bold px-2">{{ oferta.descuento }} <span
                             class="text-secondary font-semibold">{{ oferta.descripcion }}</span></p>
                 </NuxtLink>
             </CarouselStatic>

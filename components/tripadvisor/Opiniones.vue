@@ -1,9 +1,9 @@
 <template>
-    <NuxtLink :to="url" class="flex flex-col border-2 border-tripadvisor-green rounded-[20px]" target="_blank">
-        <div class="bg-tripadvisor-green rounded-t-[18px] py-2">
+    <NuxtLink :to="url" class="flex flex-col lg:flex-row lg:bg-tripadvisor-green border-2 lg:border-none border-tripadvisor-green rounded-[20px] lg:rounded-full" target="_blank">
+        <div class="bg-tripadvisor-green lg:bg-none rounded-t-[18px] lg:rounded-none py-2">
             <p class="text-center font-medium">Opiniones de nuestros viajeros</p>
         </div>
-        <div class="flex justify-center items-center gap-2 rounded-b-[18px] py-2 px-6">
+        <div class="flex justify-center items-center gap-2 lg:bg-light rounded-b-[18px] lg:rounded-none py-2 px-6">
             <p class="text-sm font-bold font-roboto">4.5</p>
             <div class="flex items-center gap-1">
                 <div v-for="n in 4" :key="n" class="w-4 h-4 bg-tripadvisor-green rounded-full"></div>

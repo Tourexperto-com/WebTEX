@@ -1,18 +1,18 @@
 <template>
-    <DefaultSection class="!gap-0">
-        <div class="w-full bg-gradient-violet pt-6 pb-20">
-            <div class="flex flex-col items-center gap-2 px-4">
-                <HeadingH2 class="text-white">Tour Experto en la prensa</HeadingH2>
-                <p class="text-center text-white text-sm font-medium">Destacamos las últimas notas que nos han hecho
+    <DefaultSection class="lg:flex lg:flex-col !gap-0 lg:!gap-4 lg:bg-gradient-violet lg:rounded-[36px] lg:p-12 pb-6 lg:pb-6">
+        <div class="w-full lg:flex lg:justify-start bg-gradient-violet lg:bg-none pt-6 pb-20 lg:p-0">
+            <div class="flex flex-col items-center lg:items-left gap-2 px-4 lg:px-0">
+                <HeadingH2 class="text-light !font-bold lg:w-full">Tour Experto en la prensa</HeadingH2>
+                <p class="text-center text-light text-sm lg:text-xl font-medium">Destacamos las últimas notas que nos han hecho
                     algunos medios digitales</p>
             </div>
         </div>
-        <div class="w-full -mt-[3.5rem]">
-            <CarouselStatic :slides-per-view="{base: 1.5, sm: 2.25, md: 3.5, lg: 5, lg: 6}">
+        <div class="w-full -mt-[3.5rem] lg:mt-0">
+            <CarouselStatic :slides-per-view="{base: 1.5, sm: 1.5, md: 1.5, lg: 3, xl: 3}">
                 <NuxtLink to="#" v-for="(item, index) in notas" :key="index"
                     class="flex flex-col gap-2 bg-gray-extraLight rounded-[18px] shadow-1 p-2 pb-3">
-                    <NuxtImg :src="item.img" :alt="item.alt" class="object-cover rounded-[12px]" />
-                    <p class="text-xs font-semibold text-secondary">{{ item.texto }}</p>
+                    <NuxtImg :src="item.img" :alt="item.alt" class="h-12 lg:h-20 object-cover rounded-[12px]" />
+                    <p class="text-xs lg:text-base font-semibold text-secondary px-2">{{ item.texto }}</p>
                 </NuxtLink>
             </CarouselStatic>
         </div>

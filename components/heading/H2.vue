@@ -1,3 +1,3 @@
 <template>
-    <h2 class="text-xl font-semibold"><slot /></h2>
+    <h2 class="text-xl font-semibold lg:text-[1.75rem]"><slot /></h2>
 </template>

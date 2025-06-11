@@ -1,3 +1,3 @@
 <template>
-    <main class="lg:max-w-[59.5rem] flex flex-col gap-6 mx-auto"><slot /></main>
+    <main class="flex flex-col gap-6 lg:gap-8 lg:mx-16"><slot /></main>
 </template>

@@ -1,10 +1,10 @@
 <template>
-    <NuxtLink to="#" class="flex flex-col gap-2 bg-white rounded-[18px] shadow-1 p-4">
+    <NuxtLink to="#" class="flex flex-col gap-2 bg-white shadow-1 rounded-[18px] p-4">
         <div class="flex items-center gap-3">
             <NuxtImg :src="review.img" :alt="review.nombre" class="w-12 h-12 rounded-full" />
             <div class="flex flex-col gap-0.5">
                 <div class="flex items-start gap-0.5">
-                    <p class="text-xs text-gray-extraDark font-semibold">{{ review.nombre }}</p>
+                    <p class="text-xs lg:text-base text-gray-extraDark font-semibold">{{ review.nombre }}</p>
                     <NuxtImg src="/images/reviews/verificado.svg" alt="Verificado" class="w-3 h-3 -mt-0.5" />
                 </div>
                 <div class="flex items-center gap-1">
@@ -25,10 +25,10 @@
 
         <div class="flex items-center gap-1">
             <NuxtImg src="/images/reviews/mundo.svg" alt="Mundo" class="w-3 h-3" />
-            <p class="text-xs text-secondary font-bold">{{ review.tour }}</p>
+            <p class="text-xs lg:text-sm lg:!leading-none text-secondary font-bold">{{ review.tour }}</p>
         </div>
 
-        <p class="text-xs text-gray-extraDark line-clamp-4">
+        <p class="text-xs lg:text-sm text-gray-extraDark line-clamp-4">
             {{ review.comentario }}
         </p>
     </NuxtLink>

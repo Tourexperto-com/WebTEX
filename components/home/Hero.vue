@@ -1,16 +1,17 @@
 <template>
     <DefaultSection class="relative" style="background-position: 80% 50%;">
         <NuxtImg src="/images/home/Hero-Mobile.png" alt=""
-            class="w-full min-h-[19.5rem] lg:min-h-[28.75rem] object-cover relative -z-10 lg:rounded-[36px]" />
-        <NuxtImg src="/images/home/Hero-Sticker.webp" alt="" class="w-16 lg:w-24 h-16 lg:h-24 absolute top-4 lg:top-8 right-4 lg:right-[4.5rem]" />
+            class="w-full min-h-[19.5rem] lg:min-h-[28.75rem] object-cover lg:rounded-[36px]" />
+        <NuxtImg src="/images/home/Hero-Sticker.webp" alt=""
+            class="w-16 lg:w-24 h-16 lg:h-24 absolute top-4 lg:top-8 right-4 lg:right-[4.5rem]" />
 
         <div
             class="w-full max-w-72 lg:max-w-[50.5rem] flex flex-col items-center gap-2 absolute z-[2] top-[4.75rem] lg:top-[10.25rem] py-4 lg:pt-0 lg:pb-6">
             <div class="w-full lg:max-w-[47rem] lg:flex lg:flex-col lg:gap-2 lg:mb-4">
-                <HeadingH1 class="text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.15)]">
+                <HeadingH1 class="text-light drop-shadow-[0_1px_4px_rgba(0,0,0,0.15)]">
                     Planificar el viaje de tus sueños nunca fue tan fácil.
                 </HeadingH1>
-                <p class="hidden lg:inline text-white text-xl font-semibold">
+                <p class="hidden lg:inline text-light text-xl font-semibold">
                     Transporte, alojamiento y actividades organizadas en todos nuestros tours,
                     para que tu única preocupación sea disfrutar cada momento.
                 </p>
@@ -18,14 +19,14 @@
 
             <div class="w-full flex flex-col items-center relative" ref="searchContainer">
                 <!-- Search -->
-                <div class="w-full relative">
+                <div class="w-full relative search-container">
                     <!-- Destinos seleccionados dentro del input -->
-                    <div v-if="selectedDestinatinos.length > 0"
-                        class="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
+                    <div v-if="selectedDestinatinos.length > 0" ref="destinosContainer"
+                        class="absolute left-[3.5rem] top-1/2 transform -translate-y-1/2 z-10 max-w-[calc(100%-8rem)]">
                         <div class="flex flex-wrap gap-1">
-                            <div v-for="destino in selectedDestinatinos" :key="destino.id"
-                                class="flex items-center gap-0.5 bg-secondary rounded-xl text-white text-xs lg:text-sm pl-3 pr-1 py-[0.375rem]">
-                                <span>{{ destino.name }}</span>
+                            <div v-for="(destino, index) in visibleDestinos" :key="index"
+                                class="flex items-center gap-0.5 bg-secondary rounded-xl text-light text-xs lg:text-sm pl-3 pr-1 py-[0.375rem] whitespace-nowrap">
+                                <span class="max-w-[150px] truncate">{{ destino.name }}</span>
                                 <button @click="removeDestino(destino.id)"
                                     class="flex justify-center items-center hover:text-gray-light transition-colors"
                                     aria-label="Remover destino">
@@ -34,16 +35,22 @@
                             </div>
                         </div>
                     </div>
+
+                    <div
+                        class="hidden lg:flex absolute left-6 top-1/2 transform -translate-y-1/2 z-10 pointer-events-none">
+                        <Icon name="material-symbols:location-on-outline" size="1.5rem" class="text-gray-dark" />
+                    </div>
+
                     <label for="searchInput" class="sr-only">¿Dónde quieres viajar?</label>
                     <input v-model="searchQuery" type="text" id="searchInput"
                         :placeholder="selectedDestinatinos.length === 0 ? '¿Dónde quieres viajar?' : ''"
-                        :readonly="isMobile && selectedDestinatinos.length > 0"
-                        class="w-full rounded-full border-0 text-gray-extraDark text-xs lg:text-base placeholder-gray-dark placeholder:text-xs lg:placeholder:text-base placeholder:font-semibold focus:outline-none py-5 lg:py-[18px] px-6"
+                        :readonly="selectedDestinatinos.length >= maxDestinos" :style="inputPaddingStyle"
+                        class="w-full rounded-full border-0 text-gray-extraDark text-xs lg:text-base placeholder-gray-dark placeholder:text-xs lg:placeholder:text-base placeholder:font-semibold focus:outline-none py-5 lg:py-[1.125rem] px-6"
                         @input="handleInput" @focus="handleFocus" @keyup.enter="handleSearch"
                         @keydown.escape="hideDropdown" />
 
                     <button @click="handleSearch"
-                        class="w-12 lg:w-auto h-12 lg:h-auto flex justify-center items-center absolute right-1 top-1/2 bg-primary hover:bg-primaryButton-hover focus:bg-primaryButton-focus text-white font-bold rounded-full transform -translate-y-1/2 transition-colors duration-300 focus:outline-none lg:py-3 lg:px-6"
+                        class="w-12 lg:w-auto h-12 lg:h-auto flex justify-center items-center absolute right-1 top-1/2 bg-primary hover:bg-primaryButton-hover focus:bg-primaryButton-focus text-light font-bold rounded-full transform -translate-y-1/2 transition-colors duration-300 focus:outline-none lg:py-3 lg:px-6"
                         aria-label="Buscar destino">
                         <div class="flex items-center gap-2">
                             <Icon name="material-symbols:search-rounded" size="1.5rem" />
@@ -54,11 +61,11 @@
 
                 <!-- Dropdown -->
                 <div v-if="showDropdown"
-                    class="w-max absolute top-full left-4 right-0 bg-white border border-gray-dark rounded-xl overflow-hidden mt-1">
+                    class="w-max absolute top-full left-4 right-0 bg-light border border-gray-dark rounded-xl overflow-hidden mt-1">
 
-                    <div v-if="isMobile && selectedDestinatinos.length > 0"
+                    <div v-if="selectedDestinatinos.length >= maxDestinos"
                         class="text-gray-dark font-semibold text-xs lg:text-sm p-4">
-                        Solo puedes elegir un destino
+                        {{ isMobile ? 'Solo puedes elegir un destino' : `Máximo ${maxDestinos} destinos` }}
                     </div>
 
                     <div v-else-if="searchQuery.length < 3" class="text-gray-dark font-semibold text-xs lg:text-sm p-4">
@@ -69,7 +76,8 @@
                         Buscando...
                     </div>
 
-                    <div v-else-if="filteredDestinatinos.length === 0" class="text-gray-dark font-semibold text-xs lg:text-sm p-4">
+                    <div v-else-if="filteredDestinatinos.length === 0"
+                        class="text-gray-dark font-semibold text-xs lg:text-sm p-4">
                         No se encontraron resultados
                     </div>
 
@@ -85,7 +93,7 @@
 
             <!-- Promocion -->
             <div
-                class="w-max flex items-center justify-center gap-1 z-[-1] bg-primary text-white rounded-full py-[0.375rem] pl-2 pr-3">
+                class="w-max flex items-center justify-center gap-1 z-[-1] bg-primary text-light rounded-full py-[0.375rem] pl-2 pr-3">
                 <Icon name="material-symbols:check-circle-outline-rounded" class="lg:w-5 lg:h-5" />
                 <p class="lg:hidden font-medium text-xs">
                     Reserva con el 20% y paga en cuotas.
@@ -94,8 +102,19 @@
             </div>
         </div>
         <!-- Carrusel con destinos -->
-        <div class="w-full max-w-[808px] -mt-16">
-            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 2.25, md: 3.5, lg: 4.15, xl: 6 }">
+        <div class="w-full max-w-[50.5rem] -mt-16 lg:-mt-[4.5rem]">
+            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 2.25, md: 3.5, lg: 4, xl: 6 }" :button-position="{
+                top: '20%',
+                transform: 'translateY(0)',
+                left: {
+                    base: '0.5rem',
+                    lg: '-1.5rem'
+                },
+                right: {
+                    base: '0.5rem',
+                    lg: '-1.5rem'
+                }
+            }">
                 <HomeHeroCard v-for="destino in carouselDestinos" :key="destino.id" :destino="destino" />
             </CarouselStatic>
         </div>
@@ -108,6 +127,8 @@ const showDropdown = ref(false)
 const isLoading = ref(false)
 const searchContainer = ref(null)
 const selectedDestinatinos = ref([])
+const destinosContainer = ref(null)
+const destinosWidth = ref(0)
 
 const destinos = ref([
     { id: 1, name: 'Arabia Saudita' },
@@ -119,7 +140,9 @@ const destinos = ref([
     { id: 7, name: 'Roma' },
     { id: 8, name: 'Madrid' },
     { id: 9, name: 'Londres' },
-    { id: 10, name: 'Berlín' }
+    { id: 10, name: 'Berlín' },
+    { id: 11, name: 'Ciudad del Cabo' },
+    { id: 12, name: 'San Petersburgo' }
 ])
 
 const carouselDestinos = ref([
@@ -157,6 +180,34 @@ const carouselDestinos = ref([
 
 const isMobile = ref(false)
 
+const maxDestinos = computed(() => isMobile.value ? 1 : 5)
+
+const visibleDestinos = computed(() => selectedDestinatinos.value)
+
+const inputPaddingStyle = computed(() => {
+    if (isMobile.value) {
+        return {}
+    }
+
+    // Default padding when no destinations are selected
+    if (selectedDestinatinos.value.length === 0) {
+        return { paddingLeft: '3.5rem' } // Original padding
+    }
+
+    // A small buffer for the icon and initial spacing
+    const basePadding = 56; // 3.5rem equivalent in px (assuming 1rem = 16px, 3.5 * 16 = 56)
+    const gap = 4; // Assuming 0.25rem gap, so 4px if 1rem = 16px
+    const dynamicPadding = destinosWidth.value + basePadding + gap;
+
+    // Ensure there's always a minimum padding to the right for the search button
+    const minRightPadding = 48 + 16; // Button width (approx 48px) + some right padding (16px)
+
+    return {
+        paddingLeft: `${dynamicPadding}px`,
+        paddingRight: `${minRightPadding}px` // Add a minimum right padding to prevent overlap with search button
+    }
+})
+
 const filteredDestinatinos = computed(() => {
     if (searchQuery.value.length < 3) return []
 
@@ -169,17 +220,26 @@ const filteredDestinatinos = computed(() => {
     )
 })
 
+const updateDestinosWidth = () => {
+    nextTick(() => {
+        if (destinosContainer.value) {
+            destinosWidth.value = destinosContainer.value.offsetWidth
+        } else {
+            destinosWidth.value = 0
+        }
+    })
+}
+
 const handleFocus = () => {
     showDropdown.value = true
 
-    // Si es mobile y ya hay destino seleccionado, no permitir escribir
-    if (isMobile.value && selectedDestinatinos.value.length > 0) {
+    if (selectedDestinatinos.value.length >= maxDestinos.value) {
         return
     }
 }
 
 const handleInput = () => {
-    if (isMobile.value && selectedDestinatinos.value.length > 0) {
+    if (selectedDestinatinos.value.length >= maxDestinos.value) {
         return
     }
 
@@ -188,7 +248,6 @@ const handleInput = () => {
     if (searchQuery.value.trim().length >= 3) {
         isLoading.value = true
 
-        // Simular delay de búsqueda
         setTimeout(() => {
             isLoading.value = false
         }, 500)
@@ -198,18 +257,17 @@ const handleInput = () => {
 }
 
 const selectDestino = (destino) => {
-    if (isMobile.value) {
-        selectedDestinatinos.value = [destino]
-    } else {
+    if (selectedDestinatinos.value.length < maxDestinos.value) {
         selectedDestinatinos.value.push(destino)
+        searchQuery.value = ''
+        hideDropdown()
+        updateDestinosWidth()
     }
-
-    searchQuery.value = ''
-    hideDropdown()
 }
 
 const removeDestino = (destinoId) => {
     selectedDestinatinos.value = selectedDestinatinos.value.filter(d => d.id !== destinoId)
+    updateDestinosWidth()
 }
 
 const handleSearch = () => {
@@ -229,20 +287,31 @@ const handleClickOutside = (event) => {
     }
 }
 
+watch(() => selectedDestinatinos.value.length, () => {
+    nextTick(() => {
+        updateDestinosWidth();
+    });
+});
+
 onMounted(() => {
     document.addEventListener('click', handleClickOutside)
     isMobile.value = window.innerWidth < 768
 
     const handleResize = () => {
         isMobile.value = window.innerWidth < 768
+
         if (isMobile.value && selectedDestinatinos.value.length > 1) {
             selectedDestinatinos.value = [selectedDestinatinos.value[0]]
         }
+
+        updateDestinosWidth()
     }
 
     window.addEventListener('resize', handleResize)
 
     window.handleResize = handleResize
+
+    updateDestinosWidth()
 })
 
 onUnmounted(() => {

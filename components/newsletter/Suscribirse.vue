@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-4 bg-secondary rounded-[18px] p-6 text-center text-white">
+    <div class="flex flex-col gap-4 bg-secondary rounded-[18px] p-6 text-center text-light">
         <div class="flex flex-col gap-2">
             <HeadingH2>
                 Ahorrá <span class="text-primary">hasta un 50%</span> en nuestros tours
