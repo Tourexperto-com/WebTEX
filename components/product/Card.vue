@@ -1,8 +1,8 @@
 <template>
     <NuxtLink :to="producto.url"
-        class="min-w-[13.375rem] flex flex-col justify-between relative rounded-[18px] flex-shrink-0 shadow-1">
+        class="flex flex-col justify-between relative rounded-[18px] flex-shrink-0 shadow-1">
         <NuxtImg :src="producto.img" :alt="producto.titulo" class="w-full h-[6.25rem] rounded-t-[18px] object-cover" />
-        <span v-if="producto.incluido" class="absolute top-3 left-4 bg-secondary rounded-[6px] text-xs text-white font-medium py-1 px-3">Aéreo
+        <span v-if="producto.incluido" class="absolute top-3 left-4 bg-secondary rounded-[6px] text-xs text-light font-medium py-1 px-3">Aéreo
             incluido</span>
         <NuxtImg v-if="producto.sticker" :src="producto.sticker" alt="" class="w-16 h-16 absolute top-3 right-3" />
         <div class="h-full flex flex-col justify-between gap-2 relative bg-gray-light p-4 pb-3">
@@ -27,10 +27,10 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col gap-1 bg-gradient-to-r from-secondary to-violet-dark rounded-b-[18px] py-2 px-4">
-            <p class="text-xs text-white font-medium">Todo incluido desde <span v-if="producto.precioTachado"
+        <div class="flex flex-col gap-1 bg-gradient-to-r from-secondary to-violet-dark rounded-b-[18px] py-2 lg:py-3 px-4">
+            <p class="text-xs lg:text-sm text-light font-medium">Todo incluido desde <span v-if="producto.precioTachado"
                     class="line-through font-semibold font-roboto">USD {{ producto.precioTachado }}</span></p>
-            <p class="text-white text-xs font-medium">USD <span class="text-lg font-bold font-roboto">{{ producto.precio
+            <p class="text-light text-xs lg:text-sm font-medium">USD <span class="text-lg lg:text-xl font-bold font-roboto">{{ producto.precio
                     }}</span>
                 por persona</p>
         </div>

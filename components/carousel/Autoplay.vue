@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <div v-if="showDots && totalPages > 1" class="flex justify-center gap-2 mt-3">
+        <div v-if="showDots && totalPages > 1" class="flex justify-center gap-2 mt-3 lg:mt-5">
             <button v-for="(dot, index) in totalPages" :key="index" @click="goToPage(index)"
                 class="w-3 h-3 rounded-full transition-colors duration-300"
                 :class="currentPage === index ? 'bg-primary' : 'bg-gray-mid hover:bg-gray-dark'"
@@ -27,7 +27,16 @@ const props = defineProps({
     showDots: { type: Boolean, default: false },
     pauseOnInvisible: { type: Boolean, default: true },
     visibilityThreshold: { type: Number, default: 0.5 },
-    gap: { type: Number, default: 8 },
+    gap: { 
+        type: [Number, Object], 
+        default: () => ({
+            base: 8,
+            sm: 8,
+            md: 8,
+            lg: 8,
+            xl: 8
+        })
+    },
     slidesToScroll: { type: Number, default: 1 },
 
     slidesPerView: {
@@ -69,10 +78,17 @@ const slidesVisible = computed(() => {
     return props.slidesPerView[currentBreakpoint.value] || props.slidesPerView.base
 })
 
+const currentGap = computed(() => {
+    if (typeof props.gap === 'number') {
+        return props.gap
+    }
+    return props.gap[currentBreakpoint.value] || props.gap.base || 8
+})
+
 const wrapperStyles = computed(() => {
     const leftPadding = (containerWidth.value - (Math.floor(slidesVisible.value) * (containerWidth.value / slidesVisible.value))) / 2
     return {
-        gap: `${props.gap}px`,
+        gap: `${currentGap.value}px`,
         paddingLeft: `${leftPadding}px`,
         paddingRight: `${leftPadding}px`
     }
@@ -102,7 +118,7 @@ const setupChildrenClasses = async () => {
     if (!wrapper) return
 
     const children = wrapper.children
-    const slideWidth = (containerWidth.value / slidesVisible.value) - (props.gap * (slidesVisible.value - 1) / slidesVisible.value)
+    const slideWidth = (containerWidth.value / slidesVisible.value) - (currentGap.value * (slidesVisible.value - 1) / slidesVisible.value)
 
     slideElements.value = Array.from(children)
     slideElements.value.forEach(child => {
@@ -123,7 +139,7 @@ const updateSlidePosition = () => {
 
     const containerScrollLeft = container.value.scrollLeft
     const slideWidth = slideElements.value[0]?.offsetWidth || 0
-    const gap = props.gap
+    const gap = currentGap.value
 
     let closestSlide = Math.round(containerScrollLeft / (slideWidth + gap))
     closestSlide = Math.max(0, Math.min(closestSlide, totalSlides.value - 1))
@@ -149,7 +165,7 @@ const goToSlide = (slideIndex) => {
     if (!container.value || !slideElements.value[slideIndex]) return
 
     const slideWidth = slideElements.value[0]?.offsetWidth || 0
-    const gap = props.gap
+    const gap = currentGap.value
     const leftPadding = parseFloat(getComputedStyle(container.value.querySelector('.carousel-wrapper')).paddingLeft) || 0
 
     const targetPosition = (slideIndex * (slideWidth + gap)) - leftPadding + leftPadding

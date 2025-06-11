@@ -1,6 +1,6 @@
 <template>
     <NuxtLink :to="destino.url"
-        class="bg-white rounded-[18px] hover:shadow-1 duration-300 cursor-pointer p-2 pb-3">
+        class="bg-light rounded-[18px] hover:shadow-1 duration-300 cursor-pointer p-2 pb-3">
         <NuxtImg :src="destino.image" :alt="destino.name" class="w-full min-h-[70px] lg:min-h-[100px] object-cover rounded-xl" loading="lazy" />
 
         <div class="flex flex-col pt-2 px-0.5">
