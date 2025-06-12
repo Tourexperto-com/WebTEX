@@ -19,6 +19,7 @@
 
             <div class="w-full flex flex-col items-center relative" ref="searchContainer">
                 <!-- Search -->
+                <!-- TODO: Fix the search input to not overlap with the selected destinations -->
                 <div class="w-full relative search-container">
                     <!-- Destinos seleccionados dentro del input -->
                     <div v-if="selectedDestinatinos.length > 0" ref="destinosContainer"
