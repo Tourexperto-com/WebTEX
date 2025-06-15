@@ -1,17 +1,17 @@
 <template>
     <div class="w-full flex flex-col gap-2">
-        <div v-if="showButton" class="hidden lg:block relative">
+        <div v-if="showButton" class="hidden md:block relative">
             <Icon :name="icon" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5 z-10" />
             <label :for="id" class="sr-only">{{ label }}</label>
             <input :id="id" :type="type" :value="modelValue"
                 class="w-full h-12 bg-light text-gray-dark font-semibold text-sm placeholder:gray-dark placeholder:text-xs placeholder:font-semibold rounded-full p-3 pl-10 focus:outline-none focus:border-transparent"
                 @input="$emit('update:modelValue', $event.target.value)" :placeholder="placeholder" :autocomplete="id"
                 @blur="$emit('blur')" @keydown.enter="handleEnterKey" />
-            <ButtonPrimary @click="$emit('button-click')" class="absolute right-1 top-1/2 !text-sm transform -translate-y-1/2 !py-3 px-6">{{
+            <ButtonPrimary @click="$emit('button-click')" class="absolute right-0.5 top-1/2 !text-sm transform -translate-y-1/2 !py-3 px-6">{{
                 buttonText }}</ButtonPrimary>
         </div>
 
-        <div :class="showButton ? 'lg:hidden' : ''" class="relative">
+        <div :class="showButton ? 'md:hidden' : ''" class="relative">
             <Icon :name="icon" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
             <label :for="showButton ? `${id}-mobile` : id" class="sr-only">{{ label }}</label>
             <input :id="showButton ? `${id}-mobile` : id" :type="type" :value="modelValue"

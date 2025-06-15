@@ -1,16 +1,16 @@
 <template>
     <DefaultSection
-        class="lg:flex lg:flex-col lg:!gap-6 !gap-0 lg:bg-gradient-violet lg:rounded-[36px] lg:p-12 lg:pb-6">
+        class="md:flex md:flex-col md:!gap-6 !gap-0 md:bg-gradient-violet md:rounded-[36px] md:p-12 md:pb-6">
         <div
-            class="w-full flex flex-col items-center lg:items-start gap-3 bg-gradient-violet lg:bg-none pt-6 pb-28 lg:p-0">
-            <div class="lg:w-full flex flex-col items-center lg:items-start gap-2">
+            class="w-full flex flex-col items-center md:items-start gap-3 bg-gradient-violet md:bg-none pt-6 pb-28 md:p-0">
+            <div class="md:w-full flex flex-col items-center md:items-start gap-2">
                 <HeadingH2 class="text-light !font-bold">Ofertas especiales</HeadingH2>
                 <p class="text-center text-light text-sm lg:text-xl">Explora nuestros tours con descuentos</p>
             </div>
             <ButtonPrimary>Ver tours en oferta</ButtonPrimary>
         </div>
-        <div class="w-full -mt-[5.5rem] lg:mt-0">
-            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 1.5, md: 1.5, lg: 3, xl: 6 }">
+        <div class="w-full -mt-[5.5rem] md:mt-0">
+            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 1.5, md: 3, lg: 3, xl: 6 }">
                 <NuxtLink :to="oferta.url" v-for="(oferta, index) in ofertas" :key="index"
                     class="flex flex-col gap-2 relative bg-light rounded-[18px] shadow-1 p-2 pb-3">
                     <NuxtImg :src="oferta.img" :alt="`${oferta.descuento} ${oferta.descripcion}`"

@@ -1,7 +1,7 @@
 <template>
     <DefaultMain>
         <HomeHero />
-        <HomeIncluido class="lg:hidden" />
+        <HomeIncluido class="md:hidden" />
         <HomeMasVendidos />
         <HomeOpinionTripadvisor />
         <HomeOfertas />

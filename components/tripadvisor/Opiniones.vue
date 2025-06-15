@@ -1,9 +1,9 @@
 <template>
-    <NuxtLink :to="url" class="lg:w-full lg:max-w-[750px] lg:h-14 flex flex-col lg:flex-row lg:items-center lg:justify-between lg:bg-tripadvisor-green border-2 lg:border-none border-tripadvisor-green rounded-[20px] lg:rounded-full lg:p-1 lg:pl-8" target="_blank">
-        <div class="bg-tripadvisor-green lg:bg-none rounded-t-[18px] lg:rounded-none py-2">
+    <NuxtLink :to="url" class="md:w-full md:max-w-[37rem] lg:max-w-[46.875rem] md:h-12 lg:h-14 flex flex-col md:flex-row md:items-center md:justify-between md:bg-tripadvisor-green border-2 lg:border-none border-tripadvisor-green rounded-[20px] md:rounded-full md:p-1 md:pl-8" target="_blank">
+        <div class="bg-tripadvisor-green md:bg-none rounded-t-[18px] md:rounded-none py-2">
             <p class="text-center lg:text-xl font-semibold">Opiniones de nuestros viajeros</p>
         </div>
-        <div class="lg:h-full flex justify-center items-center gap-2 lg:bg-light rounded-b-[18px] lg:rounded-full py-2 px-6">
+        <div class="md:h-full flex justify-center items-center gap-2 md:bg-light rounded-b-[18px] md:rounded-full py-2 px-6">
             <p class="text-sm lg:text-xl font-bold font-roboto">4.5</p>
             <div class="flex items-center gap-1">
                 <div v-for="n in 4" :key="n" class="w-4 h-4 lg:w-5 lg:h-5 bg-tripadvisor-green rounded-full"></div>

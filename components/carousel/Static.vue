@@ -1,7 +1,7 @@
 <template>
     <div class="relative w-full" ref="carouselWrapper">
         <button v-if="showLeftArrow" @click="scrollLeft"
-            class="w-12 h-12 hidden lg:flex justify-center items-center absolute z-10 bg-light shadow-md rounded-full"
+            class="w-12 h-12 hidden md:flex justify-center items-center absolute z-10 bg-light shadow-md rounded-full"
             :style="leftButtonStyle" :disabled="isAtStart" aria-label="Anterior">
             <Icon name="material-symbols:chevron-left-rounded" size="3rem" class="text-primary" />
         </button>
@@ -10,14 +10,14 @@
             :class="{ 'cursor-grabbing': isDragging }" @scroll="updateArrows" @mousedown="startDrag" @mousemove="drag"
             @mouseup="endDrag" @mouseleave="endDrag" @touchstart="startDrag" @touchmove="drag" @touchend="endDrag">
 
-            <div class="carousel-wrapper flex pb-2 px-1 first:ml-4 lg:first:ml-0 first:mr-4 lg:first:mr-0"
+            <div class="carousel-wrapper flex pb-2 px-1 first:ml-4 md:first:ml-0 first:mr-4 md:first:mr-0"
                 :style="wrapperStyles">
                 <slot />
             </div>
         </div>
 
         <button v-if="showRightArrow" @click="scrollRight"
-            class="w-12 h-12 hidden lg:flex justify-center items-center absolute z-10 bg-light shadow-md rounded-full"
+            class="w-12 h-12 hidden md:flex justify-center items-center absolute z-10 bg-light shadow-md rounded-full"
             :style="rightButtonStyle" :disabled="isAtEnd" aria-label="Siguiente">
             <Icon name="material-symbols:chevron-right-rounded" size="3rem" class="text-primary" />
         </button>
@@ -47,11 +47,11 @@ const props = defineProps({
             transform: 'translateY(-50%)',
             left: {
                 base: '0.5rem',
-                lg: '-2rem'
+                md: '-2rem',
             },
             right: {
                 base: '0.5rem',
-                lg: '-2rem'
+                md: '-2rem'
             }
         })
     },
@@ -80,11 +80,9 @@ const showRightArrow = computed(() => !isAtEnd.value)
 
 const slidesVisible = computed(() => {
     const value = props.slidesPerView[currentBreakpoint.value] || props.slidesPerView.base
-    // Asegurar que siempre devuelva un número entero para evitar problemas de cálculo
     return Math.floor(value)
 })
 
-// Nuevo computed para slides parciales (para casos como 3.5, 4.2, etc.)
 const slidesVisibleDecimal = computed(() => {
     return props.slidesPerView[currentBreakpoint.value] || props.slidesPerView.base
 })
@@ -96,20 +94,16 @@ const responsiveGap = computed(() => {
     return props.gap[currentBreakpoint.value] || props.gap.base || 8
 })
 
-// Mejorado: Cálculo para scroll de una slide a la vez
 const scrollAmount = computed(() => {
     if (!containerWidth.value) return 280
 
-    // Restar el padding horizontal de px-1 (4px * 2 = 8px)
     const paddingOffset = 8
     const effectiveWidth = containerWidth.value - paddingOffset
 
-    // Calcular el espacio ocupado por gaps
     const totalGapsWidth = (slidesVisibleDecimal.value - 1) * responsiveGap.value
     const availableWidth = effectiveWidth - totalGapsWidth
     const slideWidth = availableWidth / slidesVisibleDecimal.value
 
-    // Scroll de exactamente una slide + su gap
     return slideWidth + responsiveGap.value
 })
 
@@ -118,7 +112,6 @@ const wrapperStyles = computed(() => ({
     width: 'max-content'
 }))
 
-// Mejorada: Detección de breakpoints más robusta
 const updateBreakpoint = () => {
     if (!process.client) return
 
@@ -140,27 +133,23 @@ const updateBreakpoint = () => {
     }
 }
 
-// Mejorada: Cálculo más preciso del ancho del contenedor
 const updateContainerWidth = () => {
     if (!container.value) return
 
-    // Usar getBoundingClientRect para mayor precisión
     const rect = container.value.getBoundingClientRect()
     containerWidth.value = rect.width
 }
 
-// Mejorada: Detección de arrows con tolerancia ajustable
 const updateArrows = () => {
     if (!container.value) return
 
     const { scrollLeft, scrollWidth, clientWidth } = container.value
-    const tolerance = 2 // Reducida la tolerancia para mejor precisión
+    const tolerance = 2
 
     isAtStart.value = scrollLeft <= tolerance
     isAtEnd.value = scrollLeft >= scrollWidth - clientWidth - tolerance
 }
 
-// Mejoradas: Funciones de scroll con mejor manejo
 const scrollLeft = () => {
     if (!container.value) return
 
@@ -179,11 +168,9 @@ const scrollRight = () => {
     })
 }
 
-// Nuevas funciones para scroll más preciso
 const scrollToSlide = (slideIndex) => {
     if (!container.value) return
 
-    // Restar el padding horizontal de px-1 (4px * 2 = 8px)
     const paddingOffset = 8
     const effectiveWidth = containerWidth.value - paddingOffset
 
@@ -201,7 +188,6 @@ const scrollToSlide = (slideIndex) => {
 const getCurrentSlideIndex = () => {
     if (!container.value) return 0
 
-    // Restar el padding horizontal de px-1 (4px * 2 = 8px)
     const paddingOffset = 8
     const effectiveWidth = containerWidth.value - paddingOffset
 
@@ -223,7 +209,7 @@ const drag = (e) => {
     e.preventDefault()
 
     const x = e.pageX || e.touches[0].pageX
-    const walk = (x - startX) * 1.2 // Reducido para mejor control
+    const walk = (x - startX) * 1.2
     container.value.scrollLeft = scrollStart - walk
 }
 
@@ -231,7 +217,6 @@ const endDrag = () => {
     isDragging.value = false
 }
 
-// Mejorada: Setup de clases de children más robusto
 const setupChildrenClasses = () => {
     nextTick(() => {
         if (!container.value || !containerWidth.value) return
@@ -243,11 +228,9 @@ const setupChildrenClasses = () => {
 
         if (children.length === 0) return
 
-        // Restar el padding horizontal de px-1 (4px * 2 = 8px)
         const paddingOffset = 8
         const effectiveWidth = containerWidth.value - paddingOffset
 
-        // Calcular el espacio ocupado por gaps
         const totalGapsWidth = (slidesVisibleDecimal.value - 1) * responsiveGap.value
         const availableWidth = effectiveWidth - totalGapsWidth
         const slideWidth = availableWidth / slidesVisibleDecimal.value
@@ -260,7 +243,6 @@ const setupChildrenClasses = () => {
     })
 }
 
-// New computed for responsive left positioning
 const responsiveLeft = computed(() => {
     const leftConfig = props.buttonPosition.left
     if (typeof leftConfig === 'string') {
@@ -269,7 +251,6 @@ const responsiveLeft = computed(() => {
     return leftConfig?.[currentBreakpoint.value] || leftConfig?.base || '0.5rem'
 })
 
-// New computed for responsive right positioning  
 const responsiveRight = computed(() => {
     const rightConfig = props.buttonPosition.right
     if (typeof rightConfig === 'string') {
@@ -290,7 +271,6 @@ const rightButtonStyle = computed(() => ({
     right: responsiveRight.value
 }))
 
-// Función de inicialización mejorada
 const initialize = async () => {
     await nextTick()
 
@@ -298,7 +278,6 @@ const initialize = async () => {
     updateContainerWidth()
     setupChildrenClasses()
 
-    // Pequeño delay para asegurar que todo esté renderizado
     setTimeout(() => {
         updateArrows()
     }, 100)
@@ -307,7 +286,6 @@ const initialize = async () => {
 onMounted(() => {
     initialize()
 
-    // Event listeners con debounce para resize
     let resizeTimeout
     const debouncedResize = () => {
         clearTimeout(resizeTimeout)
@@ -320,7 +298,6 @@ onMounted(() => {
 
     window.addEventListener('resize', debouncedResize)
 
-    // ResizeObserver para cambios en el contenedor
     if (container.value && window.ResizeObserver) {
         resizeObserver = new ResizeObserver((entries) => {
             for (const entry of entries) {
@@ -344,7 +321,6 @@ onUnmounted(() => {
     }
 })
 
-// Exponer funciones útiles
 defineExpose({
     scrollLeft,
     scrollRight,
@@ -365,9 +341,7 @@ defineExpose({
     display: none;
 }
 
-/* Asegurar que el contenedor mantenga su tamaño */
 .carousel-wrapper {
     min-height: 1px;
-    /* Evitar colapso */
 }
 </style>
