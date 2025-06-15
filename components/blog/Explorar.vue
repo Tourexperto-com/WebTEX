@@ -19,7 +19,7 @@
             <ButtonPrimary class="hidden md:w-max md:block">Explorar Blog</ButtonPrimary>
         </div>
         <div class="w-full mt-3 lg:mt-0">
-            <CarouselStatic :slides-per-view="{ md:3, lg: 3, xl: 3 }">
+            <CarouselStatic :slides-per-view="{ md:3, lg: 3, xl: 4 }">
                 <NuxtLink to="#" v-for="(blog, index) in blogs" :key="index"
                     class="flex flex-col justify-between gap-2 relative bg-light text-secondary rounded-[18px] p-2 pb-3">
                     <NuxtImg :src="blog.img" :alt="blog.alt" class="w-full h-28 lg:h-32 object-cover rounded-[10px]" />

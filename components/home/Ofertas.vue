@@ -10,7 +10,7 @@
             <ButtonPrimary>Ver tours en oferta</ButtonPrimary>
         </div>
         <div class="w-full -mt-[5.5rem] md:mt-0">
-            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 1.5, md: 3, lg: 3, xl: 6 }">
+            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 1.5, md: 3, lg: 3, xl: 4 }">
                 <NuxtLink :to="oferta.url" v-for="(oferta, index) in ofertas" :key="index"
                     class="flex flex-col gap-2 relative bg-light rounded-[18px] shadow-1 p-2 pb-3">
                     <NuxtImg :src="oferta.img" :alt="`${oferta.descuento} ${oferta.descripcion}`"

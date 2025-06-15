@@ -3,7 +3,7 @@
         <NuxtImg src="/images/home/Hero-Mobile.png" alt=""
             class="w-full min-h-[19.5rem] md:min-h-[27.25rem] lg:min-h-[28.75rem] object-cover md:rounded-[36px]" />
         <NuxtImg src="/images/home/Hero-Sticker.webp" alt=""
-            class="w-16 md:w-24 h-16 md:h-24 absolute top-4 md:top-8 right-4 md:right-12 lg:right-[4.5rem]" />
+            class="w-16 md:w-24 h-16 md:h-24 absolute top-4 md:top-8 right-4 md:right-12 lg:right-[4.5rem] xl:right-[17.75rem]" />
 
         <div
             class="w-full max-w-72 md:max-w-[40rem] lg:max-w-[50.5rem] flex flex-col items-center gap-2 absolute z-[2] top-[4.75rem] md:top-[10.25rem] py-4 md:pt-0 md:pb-6">
@@ -102,17 +102,21 @@
                 <p class="hidden md:inline text-sm">Reserva con el 20% y pagá el resto en cuotas fijas sin interés</p>
             </div>
         </div>
-        <div class="w-full md:max-w-[35.75rem] lg:max-w-[50.5rem] -mt-16 lg:-mt-[4.5rem]">
+        <div class="w-full md:max-w-[35.75rem] lg:max-w-[50.5rem] xl:max-w-[76rem] -mt-16 lg:-mt-[4.5rem]">
             <CarouselStatic :slides-per-view="{ base: 1.5, sm: 1.5, md: 3, lg: 4, xl: 6 }" :button-position="{
                 top: '20%',
                 transform: 'translateY(0)',
                 left: {
                     base: '0.5rem',
-                    md: '-1.5rem'
+                    md: '-1.5rem',
+                    lg: '-1.5rem',
+                    xl: '-1.75rem',
                 },
                 right: {
                     base: '0.5rem',
-                    md: '-1.5rem'
+                    md: '-1.5rem',
+                    lg: '-1.5rem',
+                    xl: '-1.75rem',
                 }
             }">
                 <HomeHeroCard v-for="destino in carouselDestinos" :key="destino.id" :destino="destino" />
@@ -146,6 +150,36 @@ const destinos = ref([
 ])
 
 const carouselDestinos = ref([
+    {
+        id: 1,
+        name: 'Europa',
+        price: 'Desde USD 381',
+        image: '/images/home/hero/espana-viaje.webp'
+    },
+    {
+        id: 2,
+        name: 'España',
+        price: 'Desde USD 279',
+        image: '/images/home/hero/espana-viaje.webp'
+    },
+    {
+        id: 3,
+        name: 'Italia',
+        price: 'Desde USD 456',
+        image: '/images/home/hero/espana-viaje.webp'
+    },
+    {
+        id: 4,
+        name: 'Japón',
+        price: 'Desde USD 1.609',
+        image: '/images/home/hero/espana-viaje.webp'
+    },
+    {
+        id: 5,
+        name: 'Estados Unidos',
+        price: 'Desde USD 824',
+        image: '/images/home/hero/espana-viaje.webp'
+    },
     {
         id: 1,
         name: 'Europa',
