@@ -1,8 +1,8 @@
 <template>
     <DefaultSection>
-        <HeadingH2 class="text-center text-secondary px-4 lg:px-0">Somos agentes oficiales autorizados de los pricipales
+        <HeadingH2 class="text-center text-secondary px-4 md:px-0">Somos agentes oficiales autorizados de los pricipales
             operadores</HeadingH2>
-        <CarouselStatic class="lg:px-16" :slides-per-view="{ base: 2.7, sm: 4.5, md: 5.5, lg: 6, xl: 6 }" :gap="{ base: 8, lg: 48 }"
+        <CarouselStatic class="md:px-16" :slides-per-view="{ base: 2.7, sm: 4.5, md: 5, lg: 6, xl: 6 }" :gap="{ base: 8, md: 48 }"
             :button-position="{
                 top: '10%',
                 transform: 'translateY(0)',
@@ -16,9 +16,9 @@
                 }
             }">
             <div v-for="(operador, index) in operadores" :key="index"
-                class="lg:h-16 flex justify-center items-center bg-light lg:bg-none rounded-lg shadow-1 lg:shadow-none p-[0.375rem] lg:p-0">
+                class=" md:h-10 lg:h-16 flex justify-center items-center bg-light md:bg-none rounded-md shadow-1 md:shadow-none p-[0.375rem] md:p-0">
                 <NuxtImg :src="`/images/home/operadores/${operador.img}.png`" :alt="operador.alt"
-                    class="w-[4.375rem] lg:w-auto max-h-10 lg:max-h-full lg:h-full object-contain" />
+                    class="w-[4.375rem] md:w-auto max-h-10 md:max-h-full md:h-full object-contain" />
             </div>
         </CarouselStatic>
     </DefaultSection>
