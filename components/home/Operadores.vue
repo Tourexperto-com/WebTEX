@@ -2,7 +2,7 @@
     <DefaultSection>
         <HeadingH2 class="text-center text-secondary px-4 md:px-0">Somos agentes oficiales autorizados de los pricipales
             operadores</HeadingH2>
-        <CarouselStatic class="md:px-16" :slides-per-view="{ base: 2.7, sm: 4.5, md: 5, lg: 6, xl: 6 }" :gap="{ base: 8, md: 48 }"
+        <CarouselStatic class="md:px-16" :slides-per-view="{ base: 2.7, sm: 4.5, md: 5, lg: 6, xl: 8 }" :gap="{ base: 8, md: 48 }"
             :button-position="{
                 top: '10%',
                 transform: 'translateY(0)',
@@ -26,6 +26,38 @@
 
 <script setup>
 const operadores = [
+    {
+        img: "1",
+        alt: "",
+    },
+    {
+        img: "2",
+        alt: "",
+    },
+    {
+        img: "3",
+        alt: "",
+    },
+    {
+        img: "4",
+        alt: "",
+    },
+    {
+        img: "1",
+        alt: "",
+    },
+    {
+        img: "2",
+        alt: "",
+    },
+    {
+        img: "3",
+        alt: "",
+    },
+    {
+        img: "4",
+        alt: "",
+    },
     {
         img: "1",
         alt: "",

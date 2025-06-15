@@ -48,10 +48,14 @@ const props = defineProps({
             left: {
                 base: '0.5rem',
                 md: '-2rem',
+                lg: '-2rem',
+                xl: '-2rem',
             },
             right: {
                 base: '0.5rem',
-                md: '-2rem'
+                md: '-2rem',
+                lg: '-2rem',
+                xl: '-2rem',
             }
         })
     },
