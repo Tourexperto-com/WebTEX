@@ -37,7 +37,8 @@ const props = defineProps({
             sm: 2.5,
             md: 3.5,
             lg: 4,
-            xl: 5
+            xl: 5,
+            xxl: 5,
         })
     },
     buttonPosition: {
@@ -50,12 +51,14 @@ const props = defineProps({
                 md: '-2rem',
                 lg: '-2rem',
                 xl: '-2rem',
+                xxl: '-2rem',
             },
             right: {
                 base: '0.5rem',
                 md: '-2rem',
                 lg: '-2rem',
                 xl: '-2rem',
+                xxl: '-2rem',
             }
         })
     },
@@ -122,8 +125,9 @@ const updateBreakpoint = () => {
     const width = window.innerWidth
     let newBreakpoint = 'base'
 
-    if (width >= 1280) newBreakpoint = 'xl'
-    else if (width >= 1024) newBreakpoint = 'lg'
+    if (width >= 1440) newBreakpoint = 'xxl'
+    else if (width >= 1280) newBreakpoint = 'xl'
+    else if (width >= 1080) newBreakpoint = 'lg'
     else if (width >= 768) newBreakpoint = 'md'
     else if (width >= 640) newBreakpoint = 'sm'
 

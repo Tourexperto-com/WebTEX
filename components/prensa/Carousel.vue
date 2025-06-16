@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="w-full -mt-[3.5rem] md:mt-0">
-            <CarouselStatic :slides-per-view="{base: 1.5, sm: 1.5, md: 3, lg: 3, xl: 4}">
+            <CarouselStatic :slides-per-view="{base: 1.5, sm: 1.5, md: 3, lg: 3, xl: 3, xxl: 4 }">
                 <NuxtLink to="#" v-for="(item, index) in notas" :key="index"
                     class="flex flex-col gap-2 bg-gray-extraLight rounded-[18px] shadow-1 p-2 pb-3">
                     <NuxtImg :src="item.img" :alt="item.alt" class="h-12 md:h-16 lg:h-20 object-cover rounded-[12px]" />

@@ -1,9 +1,9 @@
 <template>
     <DefaultSection class="relative" style="background-position: 80% 50%;">
         <NuxtImg src="/images/home/Hero-Mobile.png" alt=""
-            class="w-full min-h-[19.5rem] md:min-h-[27.25rem] lg:min-h-[28.75rem] object-cover md:rounded-[36px]" />
+            class="w-full min-h-[19.5rem] md:min-h-[27.25rem] lg:h-[28.75rem] object-cover md:rounded-[36px]" />
         <NuxtImg src="/images/home/Hero-Sticker.webp" alt=""
-            class="w-16 md:w-24 h-16 md:h-24 absolute top-4 md:top-8 right-4 md:right-12 lg:right-[4.5rem] xl:right-[17.75rem]" />
+            class="w-16 md:w-24 h-16 md:h-24 absolute top-4 md:top-8 right-4 md:right-12 lg:right-[4.5rem] xxl:right-[17.75rem]" />
 
         <div
             class="w-full max-w-72 md:max-w-[40rem] lg:max-w-[50.5rem] flex flex-col items-center gap-2 absolute z-[2] top-[4.75rem] md:top-[10.25rem] py-4 md:pt-0 md:pb-6">
@@ -19,13 +19,13 @@
 
             <div class="w-full flex flex-col items-center relative" ref="searchContainer">
                 <!-- Search -->
-                <!-- TODO: Fix the search input to not overlap with the selected destinations -->
                 <div class="w-full relative search-container">
                     <!-- Destinos seleccionados dentro del input -->
                     <div v-if="selectedDestinatinos.length > 0" ref="destinosContainer"
-                        class="max-w-[calc(100%-8rem)] absolute left-[3.5rem] top-1/2 z-10 transform -translate-y-1/2">
-                        <div class="flex flex-wrap gap-1">
-                            <div v-for="(destino, index) in visibleDestinos" :key="index"
+                        class="absolute top-1/2 z-10 transform -translate-y-1/2 overflow-hidden"
+                        :class="destinosOverflowClass" :style="destinosPositionStyle">
+                        <div class="flex flex-wrap gap-1" :class="destinosFlexClass">
+                            <div v-for="(destino, index) in visibleDestinosToShow" :key="index"
                                 class="flex items-center gap-0.5 bg-secondary rounded-xl text-light text-xs lg:text-sm pl-3 pr-1 py-[0.375rem] whitespace-nowrap">
                                 <span class="max-w-[150px] truncate">{{ destino.name }}</span>
                                 <button @click="removeDestino(destino.id)"
@@ -34,11 +34,17 @@
                                     <Icon name="material-symbols:close-small" size="1.5rem" />
                                 </button>
                             </div>
+
+                            <!-- Indicador de destinos ocultos -->
+                            <div v-if="hiddenDestinosCount > 0"
+                                class="flex items-center bg-gray-medium rounded-xl text-dark text-xs lg:text-sm pl-1 py-[0.375rem] whitespace-nowrap">
+                                <span>+{{ hiddenDestinosCount }} más</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div
-                        class="hidden md:flex absolute left-6 top-1/2 transform -translate-y-1/2 z-10 pointer-events-none">
+                    <div class="hidden md:flex absolute left-6 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                        :class="selectedDestinatinos.length > 0 ? 'z-0' : 'z-10'">
                         <Icon name="material-symbols:location-on-outline" size="1.5rem" class="text-gray-dark" />
                     </div>
 
@@ -102,21 +108,23 @@
                 <p class="hidden md:inline text-sm">Reserva con el 20% y pagá el resto en cuotas fijas sin interés</p>
             </div>
         </div>
-        <div class="w-full md:max-w-[35.75rem] lg:max-w-[50.5rem] xl:max-w-[76rem] -mt-16 lg:-mt-[4.5rem]">
-            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 1.5, md: 3, lg: 4, xl: 6 }" :button-position="{
+        <div class="w-full md:max-w-[35.75rem] lg:max-w-[50.5rem] xxl:max-w-[76rem] -mt-16 lg:-mt-[4.5rem]">
+            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 1.5, md: 3, lg: 4, xl: 4, xxl: 6 }" :button-position="{
                 top: '20%',
                 transform: 'translateY(0)',
                 left: {
                     base: '0.5rem',
                     md: '-1.5rem',
                     lg: '-1.5rem',
-                    xl: '-1.75rem',
+                    xl: '-1.5rem',
+                    xxl: '-1.75rem',
                 },
                 right: {
                     base: '0.5rem',
                     md: '-1.5rem',
                     lg: '-1.5rem',
-                    xl: '-1.75rem',
+                    xl: '-1.5rem',
+                    xxl: '-1.75rem',
                 }
             }">
                 <HomeHeroCard v-for="destino in carouselDestinos" :key="destino.id" :destino="destino" />
@@ -133,6 +141,8 @@ const searchContainer = ref(null)
 const selectedDestinatinos = ref([])
 const destinosContainer = ref(null)
 const destinosWidth = ref(0)
+const inputWidth = ref(0)
+const isOverflowing = ref(false)
 
 const destinos = ref([
     { id: 1, name: 'Arabia Saudita' },
@@ -218,6 +228,62 @@ const maxDestinos = computed(() => isMobile.value ? 1 : 5)
 
 const visibleDestinos = computed(() => selectedDestinatinos.value)
 
+const destinosPositionStyle = computed(() => {
+    if (isMobile.value) {
+        return { left: '1.5rem' }
+    }
+
+    return { left: '3.5rem' }
+})
+
+const availableWidth = computed(() => {
+    if (isMobile.value) {
+        return inputWidth.value - 100
+    }
+
+    return inputWidth.value - 200 
+})
+
+const visibleDestinosToShow = computed(() => {
+    if (!isOverflowing.value) {
+        return selectedDestinatinos.value
+    }
+
+    if (isMobile.value) {
+        return selectedDestinatinos.value.slice(0, 1)
+    }
+
+    let totalWidth = 0
+    const destinosToShow = []
+    const averageDestinoWidth = 120
+    const counterWidth = 60
+
+    for (let i = 0; i < selectedDestinatinos.value.length; i++) {
+        const estimatedWidth = totalWidth + averageDestinoWidth
+
+        if (i > 0 && estimatedWidth + counterWidth > availableWidth.value) {
+            break
+        }
+
+        destinosToShow.push(selectedDestinatinos.value[i])
+        totalWidth = estimatedWidth
+    }
+
+    return destinosToShow.length > 0 ? destinosToShow : [selectedDestinatinos.value[0]]
+})
+
+const hiddenDestinosCount = computed(() => {
+    return selectedDestinatinos.value.length - visibleDestinosToShow.value.length
+})
+
+const destinosOverflowClass = computed(() => {
+    return isOverflowing.value ? 'max-w-[calc(100%-8rem)]' : 'max-w-[calc(100%-8rem)]'
+})
+
+const destinosFlexClass = computed(() => {
+    return isOverflowing.value ? 'flex-nowrap' : 'flex-wrap'
+})
+
 const inputPaddingStyle = computed(() => {
     if (isMobile.value) {
         return {}
@@ -228,14 +294,15 @@ const inputPaddingStyle = computed(() => {
     }
 
     const basePadding = 56;
-    const gap = 4;
-    const dynamicPadding = destinosWidth.value + basePadding + gap;
+    const gap = 8;
+    const buttonSpace = 80;
 
-    const minRightPadding = 48 + 16;
+    const dynamicPadding = Math.max(basePadding + destinosWidth.value + gap, basePadding);
+    const maxPadding = window.innerWidth > 768 ? window.innerWidth * 0.6 : 300;
 
     return {
-        paddingLeft: `${dynamicPadding}px`,
-        paddingRight: `${minRightPadding}px`
+        paddingLeft: `${Math.min(dynamicPadding, maxPadding)}px`,
+        paddingRight: `${buttonSpace}px`
     }
 })
 
@@ -254,11 +321,35 @@ const filteredDestinatinos = computed(() => {
 const updateDestinosWidth = () => {
     nextTick(() => {
         if (destinosContainer.value) {
-            destinosWidth.value = destinosContainer.value.offsetWidth
+            setTimeout(() => {
+                if (destinosContainer.value) {
+                    destinosWidth.value = destinosContainer.value.offsetWidth
+
+                    checkOverflow()
+                }
+            }, 10)
         } else {
             destinosWidth.value = 0
+            isOverflowing.value = false
         }
     })
+}
+
+const checkOverflow = () => {
+    if (!destinosContainer.value || selectedDestinatinos.value.length === 0) {
+        isOverflowing.value = false
+        return
+    }
+
+    const inputElement = document.getElementById('searchInput')
+    if (inputElement) {
+        inputWidth.value = inputElement.offsetWidth
+    }
+
+    const totalDestinosWidth = destinosWidth.value
+    const threshold = availableWidth.value * 0.8
+
+    isOverflowing.value = totalDestinosWidth > threshold
 }
 
 const handleFocus = () => {
@@ -318,28 +409,30 @@ const handleClickOutside = (event) => {
     }
 }
 
-watch(() => selectedDestinatinos.value.length, () => {
-    nextTick(() => {
-        updateDestinosWidth();
-    });
-});
+watch(() => selectedDestinatinos.value, () => {
+    updateDestinosWidth()
+}, { deep: true })
 
 onMounted(() => {
     document.addEventListener('click', handleClickOutside)
     isMobile.value = window.innerWidth < 768
 
     const handleResize = () => {
+        const wasMobile = isMobile.value
         isMobile.value = window.innerWidth < 768
 
         if (isMobile.value && selectedDestinatinos.value.length > 1) {
             selectedDestinatinos.value = [selectedDestinatinos.value[0]]
         }
 
-        updateDestinosWidth()
+        if (wasMobile !== isMobile.value) {
+            updateDestinosWidth()
+        }
+
+        checkOverflow()
     }
 
     window.addEventListener('resize', handleResize)
-
     window.handleResize = handleResize
 
     updateDestinosWidth()

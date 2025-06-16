@@ -6,7 +6,7 @@
             :auto-play="true" 
             :auto-play-interval="2500" 
             :show-dots="true" 
-            :slides-per-view="{base: 2, sm: 2, md: 4, lg: 5, xl: 6}"
+            :slides-per-view="{base: 2, sm: 2, md: 4, lg: 5, xl: 5, xxl: 6}"
             :gap="{base: 8, lg: 16}">
             <NuxtLink to="#" v-for="(categoria, index) in categorias" :key="index"
                 class="relative snap-start flex-shrink-0">

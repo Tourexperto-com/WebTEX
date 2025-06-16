@@ -34,7 +34,8 @@ const props = defineProps({
             sm: 8,
             md: 8,
             lg: 8,
-            xl: 8
+            xl: 8,
+            xxl: 8,
         })
     },
     slidesToScroll: { type: Number, default: 1 },
@@ -46,7 +47,8 @@ const props = defineProps({
             sm: 2.5,
             md: 3.5,
             lg: 4,
-            xl: 5
+            xl: 5,
+            xxl: 5,
         })
     }
 })
@@ -96,7 +98,8 @@ const wrapperStyles = computed(() => {
 
 const updateBreakpoint = () => {
     const width = window.innerWidth
-    if (width >= 1280) currentBreakpoint.value = 'xl'
+    if (width >= 1440) currentBreakpoint.value = 'xxl'
+    else if (width >= 1280) currentBreakpoint.value = 'xl'
     else if (width >= 1080) currentBreakpoint.value = 'lg'
     else if (width >= 768) currentBreakpoint.value = 'md'
     else if (width >= 480) currentBreakpoint.value = 'sm'
