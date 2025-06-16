@@ -10,20 +10,34 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/scripts',
     '@pinia/nuxt',
-    '@nuxtjs/tailwindcss'
-    // Supabase
-
-    // SEO
     // Fontaine
     // Booster
     // Vitalizer
     // GTM
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/seo',
+    '@nuxtjs/i18n'
   ],
-  // supabase: {
-
-  // },
   app: {
     // Poner etiquetas Head archivo SEO
+  },
+  site: {
+    url: 'https://tourexperto.com',
+    name: 'TourExperto'
+  },
+  i18n: {
+    locales: [
+      { code: 'latam', iso: 'es-419' },
+      { code: 'ar', iso: 'es-AR' },
+      { code: 'es', iso: 'es-ES' }, 
+      { code: 'us', iso: 'en-US' },
+      { code: 'mx', iso: 'es-MX' }
+    ],
+    defaultLocale: 'latam',
+    strategy: 'prefix_except_default',
+    bundle: {
+      optimizeTranslationDirective: false
+    }
   },
   fonts: {
     defaults: {
@@ -34,9 +48,6 @@ export default defineNuxtConfig({
     provider: 'iconify',
     collections: ['material-symbols']
   },
-  // site: {
-
-  // },
   // booster: {
 
   // },
