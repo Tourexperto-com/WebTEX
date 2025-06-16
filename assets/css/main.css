@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Raleway", sans-serif;
+    line-height: 1.2 !important;
 }
 
 html,
@@ -10,4 +11,5 @@ body {
     height: 100%;
     scroll-behavior: smooth;
     overflow-x: hidden;
+    background-color: #FBF9F9;
 }

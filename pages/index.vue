@@ -1,6 +1,17 @@
 <template>
-    <main>
+    <DefaultMain>
         <HomeHero />
-
-    </main>
+        <HomeIncluido class="md:hidden" />
+        <HomeMasVendidos />
+        <HomeOpinionTripadvisor />
+        <HomeOfertas />
+        <HomeVueloIncluido />
+        <VentajaBanner />
+        <HomeCategorias />
+        <HomeReviews />
+        <PrensaCarousel />
+        <ContactoExpertoNewsletter />
+        <HomeOperadores />
+        <BlogExplorar />
+    </DefaultMain>
 </template>

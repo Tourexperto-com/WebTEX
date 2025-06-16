@@ -5,15 +5,20 @@ export default {
             'md': '768px',
             'lg': '1080px',
             'xl': '1280px',
-            '2xl': '1375px',
+            'xxl': '1440px',
         },
         extend: {
             colors: {
                 primary: "#D3245C",
+                primaryButton: {
+                    hover: "#DE3F72",
+                    focus: "#C02053"
+                },
                 secondary: "#2E0049",
                 violet: {
                     light: "#A46AFE",
-                    mid: "#6C58FE"
+                    mid: "#6C58FE",
+                    dark: "#6E00AF"
                 },
                 dark: "#131313",
                 light: "#FBF9F9",
@@ -36,8 +41,11 @@ export default {
                 roboto: ['Roboto', 'sans-serif']
             },
             // Chequear
+            boxShadow: {
+                '1': '0px 1px 4px 0px rgba(12, 12, 13, 0.15)',
+            },
             backgroundImage: {
-                'gradient-primary': 'linear-gradient(102deg, #2E0049 1.06%, #6C58FE 100%)'
+                'gradient-violet': 'linear-gradient(to bottom, #6C58FE, #2E0049)',
             }
         }
     }

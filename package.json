@@ -5,7 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "start": "git pull origin main && npm i && nuxt dev --open",
+    "start": "git pull origin develop && npm i && nuxt dev --open",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -15,6 +15,8 @@
     "@nuxt/icon": "^1.13.0",
     "@nuxt/image": "^1.10.0",
     "@nuxt/scripts": "^0.11.8",
+    "@nuxtjs/i18n": "^9.5.5",
+    "@nuxtjs/seo": "^3.0.3",
     "@pinia/nuxt": "^0.11.0",
     "@unhead/vue": "^2.0.10",
     "nuxt": "^3.17.4",
