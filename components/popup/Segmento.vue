@@ -1,26 +1,26 @@
 <template>
     <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-2xl p-8 max-w-4xl mx-4 relative">
+        <div class="w-[90%] max-w-80 md:max-w-[41rem] lg:max-w-4xl flex flex-col gap-4 relative bg-light rounded-2xl mx-4 p-5 md:p-8">
             <button @click="closeModal"
-                class="absolute top-4 right-4 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white hover:bg-blue-600 transition-colors">
-                <Icon name="material-symbols:close" class="w-6 h-6" />
+                class="w-7 h-7 absolute top-5 right-5 bg-violet-mid rounded-full flex items-center justify-center text-white hover:bg-blue-600 transition-colors">
+                <Icon name="material-symbols:close" class="w-5 h-5" />
             </button>
 
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">
+            <div class="flex flex-col gap-5 text-center">
+                <p class="max-w-[80%] md:max-w-full text-sm md:text-base text-left text-secondary  font-semibold">
                     Para una mejor experiencia, cuéntanos desde dónde te conectas.
-                </h2>
-                <p class="text-lg text-gray-600">
+                </p>
+                <p class="font-bold text-secondary">
                     Selecciona tu país de origen.
                 </p>
             </div>
 
-            <div class="flex justify-center items-center gap-3">
+            <div class="grid md:flex grid-cols-3 gap-3">
                 <button v-for="country in countries" :key="country.code" @click="selectRegion(country.region)"
-                    class="flex flex-col items-center gap-2 rounded-lg hover:bg-gray-50 transition-colors">
+                    class="flex flex-col items-center gap-2">
                     <NuxtImg :src="`/images/segmentos/banderas/${country.flag}.png`" :alt="country.name"
                         class="w-10 h-10 rounded-full" />
-                    <span class="text-sm font-medium text-gray-700">{{ country.code }}</span>
+                    <span class="text-xs font-semibold text-secondary">{{ country.code }}</span>
                 </button>
             </div>
         </div>
