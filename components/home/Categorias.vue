@@ -6,12 +6,12 @@
             :auto-play="true" 
             :auto-play-interval="2500" 
             :show-dots="true" 
-            :slides-per-view="{base: 2, sm: 2, md: 4, lg: 5, xl: 5, xxl: 6}"
-            :gap="{base: 8, lg: 16}">
+            :slides-per-view="{base: 2, sm: 3, md: 4, lg: 5, xl: 5, xxl: 6}"
+            :gap="{base: 8, lg: 16, xl: 16, xxl: 16}">
             <NuxtLink to="#" v-for="(categoria, index) in categorias" :key="index"
                 class="relative snap-start flex-shrink-0">
                 <NuxtImg :src="categoria.img" :alt="categoria.titulo"
-                    class="md:h-[15rem] lg:h-[16.25rem] object-cover rounded-[18px]" />
+                    class="md:min-h-[15rem] lg:min-h-[16.25rem] object-cover rounded-[18px]" />
                 <div
                     class="flex flex-col justify-end absolute inset-0 bg-gradient-to-t from-[#200033] via-transparent via-60% to-transparent rounded-[18px] px-3 md:px-4 lg:px-7 pb-4 lg:pb-6">
                     <HeadingH3 class="text-light z-10">{{ categoria.titulo }}</HeadingH3>

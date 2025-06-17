@@ -1,7 +1,7 @@
 <template>
-    <DefaultSection class="px-4 md:bg-violet-dark md:rounded-[36px] md:p-12 md:pb-6">
+    <DefaultSection class="px-4 md:bg-violet-dark md:rounded-[36px] md:pb-6 md:pt-8 lg:pt-12 md:px-12">
         <div class="w-full relative md:hidden">
-            <NuxtImg src="/images/blog/fondo.png" alt="Blog" class="h-64 rounded-[18px]" />
+            <NuxtImg src="/images/blog/fondo.png" alt="Blog" class="w-full min-h-64 sm:max-h-96 rounded-[18px] object-cover" />
             <div
                 class="w-full h-full flex flex-col justify-end items-center gap-4 text-center text-light absolute inset-0 bg-gradient-to-t from-[#200033] to-transparent rounded-[18px] p-4">
                 <div class="flex flex-col items-center gap-2">
@@ -18,8 +18,8 @@
             </div>
             <ButtonPrimary class="hidden md:w-max md:block">Explorar Blog</ButtonPrimary>
         </div>
-        <div class="w-full mt-3 lg:mt-0">
-            <CarouselStatic :slides-per-view="{ md:3, lg: 3, xxl: 4 }">
+        <div class="w-full hidden md:flex mt-3 lg:mt-0">
+            <CarouselStatic :slides-per-view="{ md:3, lg: 3, xl: 4, xxl: 4 }">
                 <NuxtLink to="#" v-for="(blog, index) in blogs" :key="index"
                     class="flex flex-col justify-between gap-2 relative bg-light text-secondary rounded-[18px] p-2 pb-3">
                     <NuxtImg :src="blog.img" :alt="blog.alt" class="w-full h-28 lg:h-32 object-cover rounded-[10px]" />

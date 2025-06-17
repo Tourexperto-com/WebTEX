@@ -129,7 +129,7 @@ const updateBreakpoint = () => {
     else if (width >= 1280) newBreakpoint = 'xl'
     else if (width >= 1080) newBreakpoint = 'lg'
     else if (width >= 768) newBreakpoint = 'md'
-    else if (width >= 640) newBreakpoint = 'sm'
+    else if (width >= 480) newBreakpoint = 'sm'
 
     if (currentBreakpoint.value !== newBreakpoint) {
         currentBreakpoint.value = newBreakpoint

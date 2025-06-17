@@ -2,8 +2,8 @@
     <DefaultSection class="md:px-7">
         <HeadingH2 class="text-center text-secondary">Los más vendidos</HeadingH2>
         <CarouselStatic 
-            :slides-per-view="{ base: 1.5, sm: 1.5, md: 3, lg: 3, xl: 3, xxl: 5 }"
-            :gap="{ base: 8, lg: 16 }">
+            :slides-per-view="{ base: 1.5, sm: 2.5, md: 3, lg: 3, xl: 4, xxl: 5 }"
+            :gap="{ base: 8, lg: 16, xl: 16, xxl: 16 }">
             <ProductCard v-for="(producto, index) in productos" :key="index" :producto="producto" />
         </CarouselStatic>
     </DefaultSection>

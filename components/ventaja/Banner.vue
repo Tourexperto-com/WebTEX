@@ -1,6 +1,6 @@
 <template>
     <section>
-        <CarouselStatic :slides-per-view="{base: 1.2, sm: 2.2, md: 3}" class="lg:hidden">
+        <CarouselStatic :slides-per-view="{base: 1.4, sm: 2.5, md: 3}" class="lg:hidden">
             <NuxtImg v-for="(item, index) in banners" :key="index" :src="item.img" :alt="item.alt" class="rounded-[18px] shadow-1" />
         </CarouselStatic>
         <div class="hidden lg:flex gap-4">

@@ -108,8 +108,8 @@
                 <p class="hidden md:inline text-sm">Reserva con el 20% y pagá el resto en cuotas fijas sin interés</p>
             </div>
         </div>
-        <div class="w-full md:max-w-[35.75rem] lg:max-w-[50.5rem] xxl:max-w-[76rem] -mt-16 lg:-mt-[4.5rem]">
-            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 1.5, md: 3, lg: 4, xl: 4, xxl: 6 }" :button-position="{
+        <div class="w-full md:max-w-[43.75rem] lg:max-w-[50.5rem] xl:max-w-[60rem] xxl:max-w-[76rem] -mt-16 lg:-mt-[4.5rem]">
+            <CarouselStatic :slides-per-view="{ base: 1.5, sm: 2.5, md: 3, lg: 4, xl: 4, xxl: 6 }" :button-position="{
                 top: '20%',
                 transform: 'translateY(0)',
                 left: {
