@@ -1,12 +1,14 @@
 <template>
     <DefaultSection>
         <HeadingH2>Tours con vuelo incluido</HeadingH2>
-        <CarouselStatic :slides-per-view="{ base: 1.5, sm: 1.5, md: 3, lg: 3, lg: 6 }" class="md:hidden">
+        <CarouselStatic :slides-per-view="{ base: 1.5, sm: 2.5, md: 3 }" class="md:hidden">
             <ProductCard v-for="(producto, index) in productos" :key="index" :producto="producto" />
         </CarouselStatic>
         <div class="hidden md:grid md:grid-cols-3 xxl:grid-cols-5 md:gap-y-3 md:gap-x-2 lg:gap-4">
-            <ProductCard class="xxl:hidden" v-for="(producto, index) in productos.slice(0, 6)" :key="index" :producto="producto" />
-            <ProductCard class="hidden xxl:flex" v-for="(producto, index) in productos.slice(0, 10)" :key="index" :producto="producto" />
+            <ProductCard class="xxl:hidden" v-for="(producto, index) in productos.slice(0, 6)" :key="index"
+                :producto="producto" />
+            <ProductCard class="hidden xxl:flex" v-for="(producto, index) in productos.slice(0, 10)" :key="index"
+                :producto="producto" />
         </div>
         <ButtonPrimary>Ver más tours con vuelos</ButtonPrimary>
     </DefaultSection>
