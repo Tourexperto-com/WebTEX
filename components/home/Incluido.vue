@@ -1,7 +1,7 @@
 <template>
     <DefaultSection class="bg-gradient-violet py-6 px-4">
         <HeadingH2 class="text-center text-light">Viajes todo incluido</HeadingH2>
-        <div class="grid grid-cols-3 gap-x-2 gap-y-3">
+        <div class="viajeIncluido grid grid-cols-3 gap-x-2 gap-y-3">
             <div v-for="(item, index) in incluido" :key="index"
                 class="flex flex-col items-center gap-1 bg-light rounded-lg shadow-1 py-2 px-4">
                 <span
@@ -41,3 +41,11 @@ const incluido = [
     },
 ];
 </script>
+
+<style scoped>
+@media (width >= 540px) {
+    .viajeIncluido {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+}
+</style>
