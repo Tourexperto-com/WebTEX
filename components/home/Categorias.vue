@@ -11,7 +11,7 @@
             <NuxtLink to="#" v-for="(categoria, index) in categorias" :key="index"
                 class="relative snap-start flex-shrink-0">
                 <NuxtImg :src="categoria.img" :alt="categoria.titulo"
-                    class="md:min-h-[15rem] lg:min-h-[16.25rem] object-cover rounded-[18px]" />
+                    class="w-full md:min-h-[15rem] lg:min-h-[16.25rem] object-cover rounded-[18px]" />
                 <div
                     class="flex flex-col justify-end absolute inset-0 bg-gradient-to-t from-[#200033] via-transparent via-60% to-transparent rounded-[18px] px-3 md:px-4 lg:px-7 pb-4 lg:pb-6">
                     <HeadingH3 class="text-light z-10">{{ categoria.titulo }}</HeadingH3>

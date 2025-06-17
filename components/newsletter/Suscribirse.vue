@@ -11,15 +11,45 @@
             </div>
         </div>
 
-        <form @submit.prevent="handleSubmit" class="w-full max-w-sm md:max-w-full xl:max-w-[26.25rem] flex flex-col items-center gap-2">
-            <FormEmailIconField id="newsletter-email" v-model="form.newsletterEmail" :error="errors.newsletterEmail"
-                placeholder="Ingresa aquí tu email" label="Ingresa aquí tu email" icon="material-symbols:mail-outline"
-                :show-button="true" button-text="Suscribirme"
-                :submit-on-enter="true" @blur="validateEmail" @button-click="handleSubmit" />
+        <form @submit.prevent="handleSubmit"
+            class="w-full max-w-sm md:max-w-full xl:max-w-[26.25rem] flex flex-col items-center gap-2">
+            <div class="hidden md:block w-full relative">
+                <Icon name="material-symbols:mail-outline"
+                    class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5 z-10" />
+                <label for="newsletter-email" class="sr-only">Ingresa aquí tu email</label>
+                <input id="newsletter-email" type="email" v-model="form.newsletterEmail"
+                    class="w-full h-12 bg-light rounded-full text-gray-dark font-semibold text-sm placeholder:gray-dark placeholder:text-xs placeholder:font-semibold focus:outline-none focus:none p-3 pl-10 pr-32"
+                    placeholder="Ingresa aquí tu email" @blur="validateEmail" @keydown.enter="handleSubmit"
+                    :class="{ 'border-error focus:border-error': errors.newsletterEmail }" />
+                <ButtonPrimary @click="handleSubmit" type="button"
+                    class="absolute right-0.5 top-1/2 !text-sm transform -translate-y-1/2 !py-3 px-6">
+                    Suscribirme
+                </ButtonPrimary>
+            </div>
+
+            <div class="md:hidden w-full flex flex-col gap-2">
+                <div class="relative">
+                    <Icon name="material-symbols:mail-outline"
+                        class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                    <label for="newsletter-email-mobile" class="sr-only">Ingresa aquí tu email</label>
+                    <input id="newsletter-email-mobile" type="email" v-model="form.newsletterEmail"
+                        class="w-full bg-light text-gray-dark font-semibold text-xs placeholder:gray-dark placeholder:text-xs placeholder:font-semibold rounded-full py-3 pl-9 pr-4 focus:outline-none focus:border-transparent border-2 border-transparent focus:border-primary"
+                        placeholder="Ingresa aquí tu email" @blur="validateEmail"
+                        :class="{ 'border-error focus:border-error': errors.newsletterEmail }" />
+                </div>
+
+                <FormError v-if="errors.newsletterEmail">
+                    {{ errors.newsletterEmail }}
+                </FormError>
+            </div>
 
             <ButtonPrimary type="submit" class="w-max md:hidden">
                 Suscribirme
             </ButtonPrimary>
+
+            <FormError v-if="errors.newsletterEmail" class="hidden md:block w-full">
+                {{ errors.newsletterEmail }}
+            </FormError>
         </form>
 
         <p class="md:w-full md:max-w-56 lg:max-w-full xl:max-w-[26.25rem] text-[10px] md:text-xs font-medium md:-mt-2">
@@ -50,12 +80,15 @@ const handleSubmit = async () => {
 
     try {
         console.log('Enviando newsletter:', form.newsletterEmail)
+
+        // Back
         form.newsletterEmail = ''
         errors.newsletterEmail = null
 
 
     } catch (error) {
         console.error('Error enviando newsletter:', error)
+        errors.newsletterEmail = 'Error al suscribirse. Inténtalo nuevamente.'
     }
 }
 </script>
