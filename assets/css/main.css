@@ -13,3 +13,11 @@ body {
     overflow-x: hidden;
     background-color: #FBF9F9;
 }
+
+/* Input number */
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

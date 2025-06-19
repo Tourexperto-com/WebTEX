@@ -1,9 +1,11 @@
 <template>
     <div class="w-full flex flex-col gap-1 md:gap-2">
-        <FormLabel v-if="showLabel && label" :for="id">{{ label }}</FormLabel>
+        <FormLabel v-if="showLabel" :for="id">{{ label }}</FormLabel>
+        <label v-else :for="id" class="sr-only">{{ label }}</label>
 
         <div class="relative">
-            <Icon :name="icon" class="w-4 md:w-5 h-4 md:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-dark" />
+            <Icon v-if="icon" :name="icon"
+                class="w-4 md:w-5 h-4 md:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-dark" />
             <input :id="id" :type="type" :value="modelValue"
                 class="w-full bg-light border border-secondary rounded-[9px] text-gray-dark font-semibold text-xs md:text-sm placeholder:text-gray-dark placeholder:text-xs md:placeholder:text-sm placeholder:font-semibold p-3 focus:outline-none focus:none"
                 :class="icon ? 'pl-8 md:pl-10' : 'pl-3'" @input="$emit('update:modelValue', $event.target.value)"
@@ -48,15 +50,14 @@ export default {
         },
         type: {
             type: String,
-            default: 'email'
+            default: 'text'
         },
         icon: {
             type: String,
-            required: true
         },
         autocomplete: {
             type: String,
-            default: 'email'
+            default: 'off'
         },
         required: {
             type: Boolean,
