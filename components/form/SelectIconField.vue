@@ -3,19 +3,22 @@
         <FormLabel v-if="showLabel && label" :for="id">{{ label }}</FormLabel>
 
         <div class="relative">
+            <!-- Icono izquierdo -->
             <Icon :name="icon"
                 class="w-4 md:w-5 h-4 md:h-5 absolute left-3 top-1/2 z-10 transform -translate-y-1/2 text-gray-dark" />
 
+            <!-- Input de búsqueda/select -->
             <input :id="id" ref="searchInput" type="text" v-model="searchQuery" @click="openDropdown"
                 @focus="openDropdown" @blur="handleBlur" @keydown="handleKeydown" @input="handleInput"
                 :disabled="disabled" :placeholder="placeholder" :readonly="!searchable" :class="[
-                    'w-full bg-light border border-secondary rounded-[9px] text-left text-gray-dark font-semibold text-xs placeholder:text-gray-dark placeholder:text-xs md:placeholder:text-sm md:text-sm focus:outline-none transition-all duration-300 p-3',
+                    'w-full bg-light border border-secondary rounded-[9px] text-gray-dark font-semibold text-xs md:text-sm p-3 focus:outline-none transition-all duration-300 text-left',
                     icon ? 'pl-10 pr-10' : 'pl-3 pr-10',
                     disabled ? 'opacity-50 cursor-not-allowed' : searchable ? 'cursor-text' : 'cursor-pointer',
                     error ? 'border-error' : '',
                     !searchable ? 'caret-transparent' : ''
                 ]" :aria-expanded="isOpen" :aria-haspopup="true" :aria-required="required" autocomplete="off" />
 
+            <!-- Flecha personalizada -->
             <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <svg :class="[
                     'w-5 h-5 shadow-1 rounded-full text-primary transition-transform duration-300',
@@ -25,6 +28,7 @@
                 </svg>
             </span>
 
+            <!-- Dropdown menu -->
             <Transition enter-active-class="transition duration-200 ease-out"
                 enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
                 leave-active-class="transition duration-150 ease-in" leave-from-class="transform scale-100 opacity-100"
@@ -43,9 +47,10 @@
                     </button>
                 </div>
 
+                <!-- Mensaje cuando no hay resultados -->
                 <div v-else-if="isOpen && searchQuery && filteredOptions.length === 0"
                     class="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-[9px] shadow-lg px-4 py-3">
-                    <p class="text-xs md:text-sm text-gray-dark font-semibold">
+                    <p class="text-xs md:text-sm text-gray-500 font-semibold">
                         No se encontraron resultados para "{{ searchQuery }}"
                     </p>
                 </div>
@@ -226,7 +231,11 @@ export default {
                 case 'Enter':
                     event.preventDefault()
                     if (this.isOpen && this.focusedIndex >= 0 && availableOptions[this.focusedIndex]) {
+                        // Si hay una opción enfocada, seleccionarla
                         this.selectOption(availableOptions[this.focusedIndex])
+                    } else if (this.isOpen && availableOptions.length > 0) {
+                        // Si no hay opción enfocada pero hay opciones disponibles, seleccionar la primera
+                        this.selectOption(availableOptions[0])
                     } else if (!this.isOpen) {
                         this.openDropdown()
                     }
@@ -255,7 +264,17 @@ export default {
                     break
 
                 case 'Tab':
-                    // Permitir que Tab funcione normalmente, pero cerrar dropdown
+                    // Permitir que Tab funcione normalmente para navegación, pero cerrar dropdown
+                    if (this.isOpen) {
+                        // Si hay una opción enfocada o filtrada, seleccionarla antes de salir
+                        if (this.focusedIndex >= 0 && availableOptions[this.focusedIndex]) {
+                            event.preventDefault()
+                            this.selectOption(availableOptions[this.focusedIndex])
+                        } else if (availableOptions.length === 1) {
+                            event.preventDefault()
+                            this.selectOption(availableOptions[0])
+                        }
+                    }
                     this.isOpen = false
                     this.focusedIndex = -1
                     break

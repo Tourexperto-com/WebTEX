@@ -25,30 +25,31 @@
             <FormFieldsContainer>
                 <FormTextIconField class="md:w-1/2" id="nombre" v-model="formData.nombre" :error="errors.nombre"
                     label="Nombre" :show-label="true" placeholder="Ingresa aquí tu nombre"
-                    icon="material-symbols:person-outline" autocomplete="name" :required="true"
+                    icon="material-symbols:person-outline" autocomplete="name" :required="true" tabindex="1"
                     @blur="validateNombre" />
 
                 <FormEmailIconField class="md:w-1/2" id="email" v-model="formData.email" :error="errors.email"
                     label="Correo electrónico" :show-label="true" placeholder="Ingresa aquí tu correo"
-                    icon="material-symbols:mail-outline" type="email" @blur="validateEmail" />
+                    icon="material-symbols:mail-outline" type="email" tabindex="2" @blur="validateEmail" />
             </FormFieldsContainer>
 
             <FormFieldsContainer>
                 <FormSelectIconField class="md:w-1/2" id="pais" v-model="formData.pais" :error="errors.pais"
                     label="Selecciona tu país" :show-label="true" placeholder="Selecciona tu país"
-                    icon="material-symbols:public" :options="paisesOrdenados" :required="true" @blur="validatePais" />
+                    icon="material-symbols:public" :options="paisesOrdenados" :required="true" tabindex="3"
+                    @blur="validatePais" />
 
                 <div class="flex flex-col gap-1 md:gap-2">
                     <FormLabel for="numero">Número de Whatsapp (opcional)</FormLabel>
                     <div class="flex gap-[0.375rem]">
                         <FormTextIconField id="prefijo" v-model="formData.prefijo" label="Prefijo" placeholder="Prefijo"
                             personalizedIcon="/images/icons/WhatsApp.svg" class="w-[5.125rem] md:w-[6.375rem]"
-                            :hide-error="true" @blur="validatePhone" />
+                            :hide-error="true" tabindex="4" @blur="validatePhone" />
                         <FormNumberIconField id="area" placeholder="Área" v-model="formData.area"
-                            class="w-[3.25rem] md:w-16" :hide-error="true" @blur="validatePhone" />
+                            class="w-[3.25rem] md:w-16" :hide-error="true" tabindex="5" @blur="validatePhone" />
                         <FormNumberIconField id="numero" v-model="formData.numero" placeholder="Número"
                             autocomplete="tel-local" class="w-[6.8rem] md:w-40" :hide-error="true"
-                            :max="999999999999999" @blur="validatePhone" />
+                            :max="999999999999999" tabindex="6" @blur="validatePhone" />
                     </div>
 
                     <div class="min-h-4">
@@ -64,10 +65,10 @@
                     <p class="text-sm md:text-base text-secondary font-bold">Cantidad de pasajeros</p>
                     <div class="flex flex-col md:flex-row gap-3 md:gap-8">
                         <FormCounterField id="adultos" v-model="formData.adultos" :error="errors.adultos"
-                            suffix="Mayores" :min="1" />
+                            suffix="Mayores" :min="1" tabindex="7" />
 
                         <FormCounterField id="menores" v-model="formData.menores" :error="errors.menores" label=""
-                            suffix="Menores de 12 años" :min="0" />
+                            suffix="Menores de 12 años" :min="0" tabindex="8" />
                     </div>
                 </div>
 
@@ -78,19 +79,19 @@
                         label="Ticket aereo" :options="[
                             { label: 'Sí', value: true },
                             { label: 'No', value: false }
-                        ]" @blur="validateTicketAereo" />
+                        ]" tabindex="9" @blur="validateTicketAereo" />
                 </div>
             </FormFieldsContainer>
 
             <FormTextareaField id="pregunta" v-model="formData.pregunta" :error="errors.pregunta" label="Tu pregunta"
                 :show-label="true" placeholder="Escribe tu pregunta aquí..." :rows="3" :maxlength="500"
-                min-height="80px" @blur="validatePregunta" />
+                min-height="80px" tabindex="10" @blur="validatePregunta" />
 
             <div class="flex flex-col md:flex-row-reverse md:justify-start gap-2 md:gap-4">
-                <ButtonPrimary type="submit" :disabled="isSubmitting">
+                <ButtonPrimary type="submit" :disabled="isSubmitting" tabindex="11">
                     {{ isSubmitting ? 'ENVIANDO...' : 'ENVIAR' }}
                 </ButtonPrimary>
-                <ButtonPrimary type="button" @click="$emit('close')"
+                <ButtonPrimary type="button" @click="$emit('close')" tabindex="12"
                     class="!bg-light !text-secondary border-2 border-secondary !py-[0.875rem]">
                     CERRAR
                 </ButtonPrimary>
