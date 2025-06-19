@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full flex flex-col gap-1 md:gap-2">
+    <div class="flex flex-col gap-1 md:gap-2">
         <div class="relative">
             <Icon v-if="icon" :name="icon"
                 class="w-4 md:w-5 h-4 md:h-5  absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-dark" />

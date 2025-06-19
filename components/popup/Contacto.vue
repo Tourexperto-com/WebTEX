@@ -1,5 +1,6 @@
 <template>
-    <div v-if="!showSuccessModal" class="w-full max-w-72 md:max-w-[45.5rem] lg:max-w-[48.5rem] rounded-[18px] md:rounded-[36px] mx-auto">
+    <div v-if="!showSuccessModal"
+        class="w-full max-w-72 md:max-w-[45.5rem] lg:max-w-[48.5rem] rounded-[18px] md:rounded-[36px] mx-auto">
         <div
             class="flex flex-col md:flex-row items-center gap-3 md:gap-6 relative bg-gradient-to-r from-secondary to-violet-light rounded-t-[18px] md:rounded-t-[36px] p-4 md:p-6 pb-8 md:pb-16">
             <button @click="$emit('close')"
@@ -22,25 +23,31 @@
         <form @submit.prevent="submitForm"
             class="relative z-[1] flex flex-col gap-2 md:gap-4 bg-light rounded-[18px] md:rounded-[36px] p-4 md:p-5 -mt-4 md:-mt-10">
             <FormFieldsContainer>
-                <FormTextIconField id="nombre" v-model="formData.nombre" :error="errors.nombre" label="Nombre"
-                    :show-label="true" placeholder="Ingresa aquí tu nombre" icon="material-symbols:person-outline"
-                    autocomplete="name" :required="true" @blur="validateNombre" />
+                <FormTextIconField class="md:w-1/2" id="nombre" v-model="formData.nombre" :error="errors.nombre"
+                    label="Nombre" :show-label="true" placeholder="Ingresa aquí tu nombre"
+                    icon="material-symbols:person-outline" autocomplete="name" :required="true"
+                    @blur="validateNombre" />
 
-                <FormEmailIconField id="email" v-model="formData.email" :error="errors.email" label="Correo electrónico"
-                    :show-label="true" placeholder="Ingresa aquí tu correo" icon="material-symbols:mail-outline"
-                    type="email" @blur="validateEmail" />
+                <FormEmailIconField class="md:w-1/2" id="email" v-model="formData.email" :error="errors.email"
+                    label="Correo electrónico" :show-label="true" placeholder="Ingresa aquí tu correo"
+                    icon="material-symbols:mail-outline" type="email" @blur="validateEmail" />
             </FormFieldsContainer>
+
             <FormFieldsContainer>
+                <FormSelectIconField class="md:w-1/2" id="pais" v-model="formData.pais" :error="errors.pais"
+                    label="Selecciona tu país" :show-label="true" placeholder="Selecciona tu país"
+                    icon="material-symbols:public" :options="paisesOrdenados" :required="true" @blur="validatePais" />
+
                 <div class="flex flex-col gap-1 md:gap-2">
                     <FormLabel for="numero">Número de Whatsapp (opcional)</FormLabel>
                     <div class="flex gap-[0.375rem]">
-                        <FormNumberIconField id="prefijo" v-model="formData.prefijo" label="Prefijo"
-                            placeholder="Prefijo" personalizedIcon="/images/icons/WhatsApp.svg"
-                            class="!w-[5.125rem] md:!w-[6.375rem]" :hide-error="true" @blur="validatePhone" />
+                        <FormTextIconField id="prefijo" v-model="formData.prefijo" label="Prefijo" placeholder="Prefijo"
+                            personalizedIcon="/images/icons/WhatsApp.svg" class="w-[5.125rem] md:w-[6.375rem]"
+                            :hide-error="true" @blur="validatePhone" />
                         <FormNumberIconField id="area" placeholder="Área" v-model="formData.area"
-                            class="!w-[3.25rem] md:!w-16" :hide-error="true" @blur="validatePhone" />
+                            class="w-[3.25rem] md:w-16" :hide-error="true" @blur="validatePhone" />
                         <FormNumberIconField id="numero" v-model="formData.numero" placeholder="Número"
-                            autocomplete="tel-local" class="!w-[6.25rem] md:!w-40" :hide-error="true"
+                            autocomplete="tel-local" class="w-[6.8rem] md:w-40" :hide-error="true"
                             :max="999999999999999" @blur="validatePhone" />
                     </div>
 
@@ -50,12 +57,7 @@
                         </FormError>
                     </div>
                 </div>
-
-                <FormSelectIconField id="pais" v-model="formData.pais" :error="errors.pais" label="Selecciona tu país"
-                    :show-label="true" placeholder="Selecciona tu país" icon="material-symbols:public" :options="paises"
-                    :required="true" @blur="validatePais" />
             </FormFieldsContainer>
-
 
             <FormFieldsContainer>
                 <div class="md:w-1/2 flex flex-col gap-1 md:gap-2">
@@ -78,7 +80,6 @@
                             { label: 'No', value: false }
                         ]" @blur="validateTicketAereo" />
                 </div>
-
             </FormFieldsContainer>
 
             <FormTextareaField id="pregunta" v-model="formData.pregunta" :error="errors.pregunta" label="Tu pregunta"
@@ -160,25 +161,51 @@ const errors = reactive({
 const isSubmitting = ref(false)
 const showSuccessModal = ref(false)
 
-const prefijosPaises = [
-    { label: '+54 (Argentina)', value: '+54' },
-    { label: '+1 (Estados Unidos)', value: '+1' },
-    { label: '+34 (España)', value: '+34' },
-    { label: '+52 (México)', value: '+52' },
-    { label: '+56 (Chile)', value: '+56' },
-    { label: '+57 (Colombia)', value: '+57' },
-    { label: '+58 (Venezuela)', value: '+58' },
-    { label: '+51 (Perú)', value: '+51' },
-    { label: '+55 (Brasil)', value: '+55' }
-]
+const prefijosPaises = {
+    'Argentina': '+54',
+    'Chile': '+56',
+    'Colombia': '+57',
+    'España': '+34',
+    'Estados Unidos': '+1',
+    'México': '+52',
+    'Perú': '+51',
+    'Brasil': '+55',
+    'Uruguay': '+598',
+    'Paraguay': '+595',
+    'Bolivia': '+591',
+    'Ecuador': '+593',
+    'Venezuela': '+58',
+    'Costa Rica': '+506',
+    'Panamá': '+507',
+    'Guatemala': '+502',
+    'Honduras': '+504',
+    'Nicaragua': '+505',
+    'El Salvador': '+503',
+    'República Dominicana': '+1',
+    'Puerto Rico': '+1',
+    'Cuba': '+53'
+}
 
 const paises = [
-    'Argentina', 'Chile', 'Colombia', 'España', 'Estados Unidos', 'México',
+    'Argentina', 'Colombia', 'España', 'Estados Unidos', 'México',
     'Perú', 'Brasil', 'Uruguay', 'Paraguay', 'Bolivia', 'Ecuador',
     'Venezuela', 'Costa Rica', 'Panamá', 'Guatemala', 'Honduras',
     'Nicaragua', 'El Salvador', 'República Dominicana', 'Puerto Rico',
-    'Cuba', 'Otro'
+    'Cuba', 'Otro', 'Chile', 'Chipre'
 ]
+
+const paisesOrdenados = computed(() => {
+    const paisesSinOtro = paises.filter(pais => pais !== 'Otro').sort()
+    return [...paisesSinOtro, 'Otro']
+})
+
+watch(() => formData.pais, (nuevoPais) => {
+    if (nuevoPais && prefijosPaises[nuevoPais]) {
+        formData.prefijo = prefijosPaises[nuevoPais]
+    } else {
+        formData.prefijo = ''
+    }
+})
 
 const validateNombre = () => {
     if (!formData.nombre.trim()) {
@@ -324,7 +351,6 @@ const closeSuccessModal = () => {
 }
 
 const submitForm = async () => {
-
     if (!validateForm()) {
         return
     }
@@ -333,7 +359,6 @@ const submitForm = async () => {
 
     try {
         showSuccessModal.value = true
-
     } catch (error) {
         console.error(error)
     } finally {
