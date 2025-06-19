@@ -1,18 +1,20 @@
 <template>
-    <div class="w-full flex flex-col gap-2">
+    <div class="w-full flex flex-col gap-1 md:gap-2">
         <FormLabel v-if="showLabel && label" :for="id">{{ label }}</FormLabel>
         <label v-else-if="label" :for="id" class="sr-only">{{ label }}</label>
 
         <div class="relative">
             <textarea :id="id" :value="modelValue"
-                class="w-full bg-light border border-secondary rounded-[9px] text-gray-dark font-semibold text-xs placeholder:gray-dark placeholder:text-xs placeholder:font-semibold p-3 focus:outline-none focus:none resize-none"
+                class="w-full bg-light border border-secondary rounded-[9px] text-gray-dark font-semibold text-xs md:text-sm placeholder:text-gray-dark placeholder:text-xs md:placeholder:text-sm placeholder:font-semibold p-3 focus:outline-none focus:none resize-none"
                 @input="handleInput" :placeholder="placeholder" @blur="$emit('blur')" :required="required"
                 :disabled="disabled" :rows="rows" :maxlength="maxlength" :style="{ minHeight: minHeight }" />
         </div>
 
-        <FormError v-if="error">
-            {{ error }}
-        </FormError>
+        <div class="w-full min-h-4">
+            <FormError v-if="error">
+                {{ error }}
+            </FormError>
+        </div>
     </div>
 </template>
 

@@ -37,19 +37,20 @@
                         placeholder="Ingresa aquí tu email" @blur="validateEmail"
                         :class="{ 'border-error focus:border-error': errors.newsletterEmail }" />
                 </div>
-
-                <FormError v-if="errors.newsletterEmail">
-                    {{ errors.newsletterEmail }}
-                </FormError>
             </div>
 
             <ButtonPrimary type="submit" class="w-max md:hidden">
                 Suscribirme
             </ButtonPrimary>
 
-            <FormError v-if="errors.newsletterEmail" class="hidden md:block w-full">
-                {{ errors.newsletterEmail }}
-            </FormError>
+            <div class="md:w-full min-h-4">
+                <div v-if="errors.newsletterEmail" class="w-full flex items-center gap-1">
+                    <Icon name="material-symbols:error-circle-rounded-outline-sharp" class="text-light" />
+                    <p class="text-light text-xs">
+                        {{ errors.newsletterEmail }}
+                    </p>
+                </div>
+            </div>
         </form>
 
         <p class="md:w-full md:max-w-56 lg:max-w-full xl:max-w-[26.25rem] text-[10px] md:text-xs font-medium md:-mt-2">

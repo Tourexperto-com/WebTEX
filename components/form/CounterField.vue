@@ -1,22 +1,24 @@
 <template>
-    <div class="w-full flex flex-col gap-2">
-        <div class="flex flex-col gap-2">
+    <div class="w-max flex flex-col gap-1 md:gap-2">
+        <div class="flex flex-col gap-1 md:gap-2">
             <FormLabel v-if="showLabel && label">{{ label }}</FormLabel>
-            <div class="flex items-center gap-3">
-                <button type="button" @click="decrement" :disabled="disabled || modelValue <= min"
-                    class="w-6 h-6 flex items-center justify-center bg-primary border border-primary text-light rounded-full focus:outline-none">
-                    <Icon name="material-symbols:remove" class="w-4 h-4" />
-                </button>
+            <div class="md:w-max flex md:flex-col items-center gap-3 md:gap-2">
+                <div class="flex items-center gap-2">
+                    <button type="button" @click="decrement" :disabled="disabled || modelValue <= min"
+                        class="w-6 h-6 flex items-center justify-center bg-primary border border-primary text-light rounded-full focus:outline-none">
+                        <Icon name="material-symbols:remove" class="w-4 h-4" />
+                    </button>
 
-                <div class="min-w-[30px] border border-black/30 rounded-[6px] text-center py-2 px-1">
-                    <span class="text-secondary font-semibold">{{ displayValue }}</span>
+                    <div class="min-w-[30px] border border-black/30 rounded-[6px] text-center py-2 px-1">
+                        <span class="text-secondary font-semibold">{{ displayValue }}</span>
+                    </div>
+
+                    <button type="button" @click="increment" :disabled="disabled || (max !== null && modelValue >= max)"
+                        class="w-6 h-6 flex items-center justify-center bg-primary border border-primary text-light rounded-full focus:outline-none">
+                        <Icon name="material-symbols:add" class="w-4 h-4" />
+                    </button>
                 </div>
-
-                <button type="button" @click="increment" :disabled="disabled || (max !== null && modelValue >= max)"
-                    class="w-6 h-6 flex items-center justify-center bg-primary border border-primary text-light rounded-full focus:outline-none">
-                    <Icon name="material-symbols:add" class="w-4 h-4" />
-                </button>
-                <label :for="id" v-if="suffix" class="text-secondary text-xs font-semibold">{{ suffix }}</label>
+                <p :for="id" v-if="suffix" class="text-secondary text-xs md:text-sm font-semibold">{{ suffix }}</p>
             </div>
         </div>
 

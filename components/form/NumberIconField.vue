@@ -1,21 +1,23 @@
 <template>
-    <div class="w-full flex flex-col gap-2">
+    <div class="w-full flex flex-col gap-1 md:gap-2">
         <div class="relative">
             <Icon v-if="icon" :name="icon"
-                class="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                class="w-4 md:w-5 h-4 md:h-5  absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-dark" />
             <NuxtImg v-if="personalizedIcon" :src="personalizedIcon" alt="Icon"
-                class="w-3 h-3 absolute left-3 top-1/2 transform -translate-y-1/2" />
+                class="w-3 md:w-4 h-3 md:h-4 absolute left-3 top-1/2 transform -translate-y-1/2" />
             <label :for="id" class="sr-only">{{ label }}</label>
             <input :id="id" type="number" :value="modelValue"
-                class="w-full bg-light border border-secondary rounded-[9px] text-gray-dark font-semibold text-xs placeholder:gray-dark placeholder:text-xs placeholder:font-semibold p-3 focus:outline-none focus:none"
-                :class="icon || personalizedIcon ? 'pl-8' : 'pl-3'" @input="handleInput" :placeholder="placeholder"
+                class="w-full bg-light border border-secondary rounded-[9px] text-gray-dark font-semibold text-xs md:text-sm placeholder:text-gray-dark placeholder:text-xs md:placeholder:text-sm placeholder:font-semibold p-3 focus:outline-none focus:none"
+                :class="icon || personalizedIcon ? 'pl-8 md:pl-9' : 'pl-3'" @input="handleInput" :placeholder="placeholder"
                 :autocomplete="autocomplete" @blur="$emit('blur')" :required="required" :disabled="disabled" :min="min"
                 :max="max" :step="step" />
         </div>
 
-        <FormError v-if="error">
-            {{ error }}
-        </FormError>
+        <div v-if="!hideError" class="w-full min-h-4">
+            <FormError v-if="error">
+                {{ error }}
+            </FormError>
+        </div>
     </div>
 </template>
 
@@ -73,6 +75,10 @@ export default {
         step: {
             type: Number,
             default: 1
+        },
+        hideError: {
+            type: Boolean,
+            default: false
         }
     },
     emits: ['update:modelValue', 'blur'],

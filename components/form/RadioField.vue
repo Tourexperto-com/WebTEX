@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full flex flex-col gap-2">
+    <div class="w-full flex flex-col gap-1 md:gap-2">
         <FormLabel v-if="showLabel && label">{{ label }}</FormLabel>
 
         <div class="flex gap-4 flex-wrap">
@@ -19,16 +19,18 @@
                         <div v-if="modelValue === getOptionValue(option)" class="w-2 h-2 rounded-full bg-light"></div>
                     </div>
                 </div>
-                <span class="text-gray-dark font-semibold text-xs select-none"
+                <span class="text-gray-dark font-semibold text-xs md:text-sm select-none"
                     :class="{ 'cursor-not-allowed': disabled || option.disabled }">
                     {{ getOptionLabel(option) }}
                 </span>
             </label>
         </div>
 
-        <FormError v-if="error">
-            {{ error }}
-        </FormError>
+        <div class="w-full min-h-4">
+            <FormError v-if="error">
+                {{ error }}
+            </FormError>
+        </div>
     </div>
 </template>
 

@@ -34,7 +34,8 @@ export default {
                 tripadvisor: {
                     green: "#34E0A1",
                     black: "#000000"
-                }
+                },
+                error: "#F03A36",
             },
             fontFamily: {
                 raleway: ['Raleway', 'sans-serif'],
