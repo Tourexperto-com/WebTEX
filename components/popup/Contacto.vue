@@ -18,6 +18,7 @@
                 </p>
             </div>
         </div>
+        <!-- TODO: Hacer responsive -->
 
         <form @submit.prevent="submitForm" class="relative z-[1] flex flex-col gap-2 bg-light rounded-[18px] p-4 -mt-3">
             <FormTextIconField id="nombre" v-model="formData.nombre" :error="errors.nombre" label="Nombre completo"
