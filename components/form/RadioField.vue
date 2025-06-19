@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full flex flex-col gap-1 md:gap-2">
+    <div class="flex flex-col gap-1 md:gap-2">
         <FormLabel v-if="showLabel && label">{{ label }}</FormLabel>
 
         <div class="flex gap-4 flex-wrap">
