@@ -15,6 +15,10 @@ export default {
                     focus: "#C02053"
                 },
                 secondary: "#2E0049",
+                secondaryButton: {
+                    hover: "#470070",
+                    focus: "#200033"
+                },
                 violet: {
                     light: "#A46AFE",
                     mid: "#6C58FE",
