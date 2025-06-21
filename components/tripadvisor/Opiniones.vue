@@ -12,7 +12,7 @@
                     <span class="absolute right-0 top-0 h-full w-1/2"></span>
                 </div>
             </div>
-            <NuxtImg src="/images/tripadvisor/Logo-Tripadvisor.svg" alt="Logo-Tripadvisor" class="h-4 lg:h-6" />
+            <NuxtImg src="/images/tripadvisor/Logo-Tripadvisor.svg" alt="Logo Tripadvisor" class="h-4 lg:h-6" />
         </div>
     </NuxtLink>
 </template>
